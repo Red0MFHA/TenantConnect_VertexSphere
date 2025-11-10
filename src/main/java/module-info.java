@@ -1,0 +1,9 @@
+module com.example.tenantconnect {
+    requires javafx.controls;
+    requires javafx.fxml;
+
+    requires com.dlsc.formsfx;
+
+    opens com.example.tenantconnect to javafx.fxml;
+    exports com.example.tenantconnect;
+}
