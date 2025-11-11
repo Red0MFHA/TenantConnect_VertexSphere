@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.tenantconnect.controllers.AuthController"
+            prefWidth="600" prefHeight="700"
+            style="-fx-background-color: linear-gradient(to bottom right, #1E3A8A, #2563EB);">
+
+    <children>
+        <VBox spacing="20" alignment="CENTER" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+              AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+
+            <!-- Logo & Title -->
+            <VBox spacing="5" alignment="CENTER">
+                <HBox alignment="CENTER">
+                    <ImageView fx:id="iconBuilding" fitHeight="60" fitWidth="60"/>
+                    <ImageView fx:id="iconCrown" fitHeight="30" fitWidth="30"/>
+                </HBox>
+
+                <Label text="TenantConnect" style="-fx-text-fill: white; -fx-font-size: 32px;"/>
+                <Label text="Rent Payment . Complaint Tracking System"
+                       style="-fx-text-fill: #E0F2FE; -fx-font-size: 14px;"/>
+            </VBox>
+
+            <!-- Card -->
+            <VBox prefWidth="400" spacing="10"
+                  style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #E0F2FE; -fx-border-width: 2;">
+                <padding>
+                    <Insets top="20" left="20" right="20" bottom="20"/>
+                </padding>
+
+                <Label text="Welcome" style="-fx-text-fill: #1E3A8A; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+                <Label text="Login or create a new account"/>
+
+                <TabPane fx:id="authTabs" tabClosingPolicy="UNAVAILABLE">
+
+                    <!-- LOGIN TAB -->
+                    <tabs>
+                        <Tab text="Login">
+                            <VBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="Email"/>
+                                <TextField fx:id="loginEmail" promptText="Enter your email"/>
+
+                                <Label text="Password"/>
+                                <PasswordField fx:id="loginPassword" promptText="Enter your password"/>
+
+                                <Button text="Login"
+                                        style="-fx-background-color: #F97316; -fx-text-fill: white; -fx-pref-width: 100%;"/>
+
+                                <Hyperlink text="Forgot Password?" />
+                            </VBox>
+                        </Tab>
+
+                        <!-- SIGNUP TAB -->
+                        <Tab text="Sign Up">
+                            <VBox spacing="10" alignment="CENTER_LEFT">
+
+                                <Label text="Full Name"/>
+                                <TextField fx:id="signupName" promptText="Enter your full name"/>
+
+                                <Label text="Email"/>
+                                <TextField fx:id="signupEmail" promptText="Enter your email"/>
+
+                                <Label text="Password"/>
+                                <PasswordField fx:id="signupPassword" promptText="Create a password"/>
+
+                                <Label text="Confirm Password"/>
+                                <PasswordField fx:id="signupConfirm" promptText="Confirm your password"/>
+
+                                <Label text="Role"/>
+                                <ComboBox fx:id="signupRole">
+                                    <items>
+<!--                                        <FXCollections fx:factory="observableArrayList">-->
+<!--                                            <String fx:value="Owner"/>-->
+<!--                                            <String fx:value="Tenant"/>-->
+<!--                                        </FXCollections>-->
+                                    </items>
+                                </ComboBox>
+
+                                <Button text="Create Account"
+                                        style="-fx-background-color: #F97316; -fx-text-fill: white; -fx-pref-width: 100%;"/>
+
+                            </VBox>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </VBox>
+
+            <Label text="Demo: Use owner@test.com or tenant@test.com with any password"
+                   style="-fx-text-fill: #E0F2FE; -fx-font-size: 12px;"/>
+
+        </VBox>
+
+    </children>
+</AnchorPane>
