@@ -9,3 +9,4 @@ CREATE TABLE users (
                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                        is_active BOOLEAN DEFAULT 1
 );
+

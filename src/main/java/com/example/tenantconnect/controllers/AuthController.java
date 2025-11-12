@@ -84,7 +84,10 @@ public class AuthController {
             showAlert("Error", "Invalid email format!");
             return;
         }
-
+        if(chekUser(email)){
+            showAlert("Error", "Email already exists!");
+            return;
+        }
         // 3️⃣ Check passwords match
         if (!password.equals(confirmPassword)) {
             showAlert("Error", "Passwords do not match!");
@@ -103,7 +106,9 @@ public class AuthController {
 
 
     // ---------------- Helper Methods ----------------
-
+    private boolean chekUser(String email){
+        return userRepo.getUserByEmail(email) != -1;
+    }
     private void changeScene(ActionEvent event, String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -119,6 +124,7 @@ public class AuthController {
             showAlert("Error", "Failed to load page: " + e.getMessage());
         }
     }
+
 
     private void showAlert(String title, String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

@@ -58,4 +58,73 @@ public class UserRepository {
         }
         return -1; // Not found or inactive
     }
+
+    // ===== SELECT BY ID =====
+    public String getUserById(int userId) {
+        String sql = "SELECT * FROM users WHERE user_id=" + userId;
+        ResultSet rs = dbHandler.executeSelect(sql);
+        try {
+            if (rs != null && rs.next()) {
+                String result = rs.getInt("user_id") + " - " + rs.getString("email") +
+                        " - " + rs.getString("full_name");
+                rs.close();
+                return result;
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // ===== SELECT BY NAME =====
+    public List<String> getUsersByName(String name) {
+        List<String> users = new ArrayList<>();
+        String sql = "SELECT * FROM users WHERE full_name LIKE '%" + name + "%'";
+        ResultSet rs = dbHandler.executeSelect(sql);
+        try {
+            while (rs != null && rs.next()) {
+                users.add(rs.getInt("user_id") + " - " + rs.getString("full_name"));
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    // ===== SELECT BY EMAIL =====
+    public int getUserByEmail(String email) {
+        String sql = "SELECT * FROM users WHERE email='" + email + "'";
+        ResultSet rs = dbHandler.executeSelect(sql);
+        try {
+            if (rs != null && rs.next()) {
+                int result = rs.getInt("user_id") ;
+                rs.close();
+                return result;
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    // ===== SELECT BY DATE RANGE =====
+    public List<String> getUsersByDateRange(String startDate, String endDate) {
+        // Expected format: "YYYY-MM-DD"
+        List<String> users = new ArrayList<>();
+        String sql = "SELECT * FROM users WHERE date(created_at) BETWEEN '" + startDate + "' AND '" + endDate + "'";
+        ResultSet rs = dbHandler.executeSelect(sql);
+        try {
+            while (rs != null && rs.next()) {
+                users.add(rs.getInt("user_id") + " - " + rs.getString("email") +
+                        " - " + rs.getString("created_at"));
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
 }
