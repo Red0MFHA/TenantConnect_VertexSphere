@@ -49,6 +49,7 @@
                                 <PasswordField fx:id="loginPassword" promptText="Enter your password"/>
 
                                 <Button text="Login"
+                                        onAction="#onLogin"
                                         style="-fx-background-color: #F97316; -fx-text-fill: white; -fx-pref-width: 100%;"/>
 
                                 <Hyperlink text="Forgot Password?" />
@@ -82,6 +83,7 @@
                                 </ComboBox>
 
                                 <Button text="Create Account"
+                                        onAction="#onSignup"
                                         style="-fx-background-color: #F97316; -fx-text-fill: white; -fx-pref-width: 100%;"/>
 
                             </VBox>
