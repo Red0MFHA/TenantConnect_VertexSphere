@@ -12,8 +12,27 @@ public class UserRepository {
 
     public UserRepository() {
         this.dbHandler = DB_Handler.getInstance(); // get the shared DBHandler
+        this.ensureTableExists(); // to ensure that users table exists
     }
-
+    private void ensureTableExists() {
+        if (!dbHandler.tableExists("users")) {
+            String createTableSQL = """
+                CREATE TABLE users (
+                    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    email VARCHAR(255) UNIQUE NOT NULL,
+                    password VARCHAR(255) NOT NULL,
+                    full_name VARCHAR(100) NOT NULL,
+                    user_type VARCHAR(10) CHECK(user_type IN ('owner', 'tenant')) NOT NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    is_active BOOLEAN DEFAULT 1
+                );
+            """;
+            dbHandler.executeQuery(createTableSQL);
+            System.out.println("✅ Users table created successfully!");
+        } else {
+            System.out.println("ℹ️ Users table already exists.");
+        }
+    }
     public boolean addUser(String email, String password, String fullName, String userType) {
         String sql = "INSERT INTO users(email, password, full_name, user_type) " +
                 "VALUES('" + email + "','" + password + "','" + fullName + "','" + userType + "')";
