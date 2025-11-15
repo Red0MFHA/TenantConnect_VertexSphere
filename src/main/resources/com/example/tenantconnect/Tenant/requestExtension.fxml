@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      spacing="20"
+      alignment="TOP_LEFT"
+      prefWidth="800"
+      prefHeight="600">
+
+    <padding>
+        <Insets top="20" left="20" right="20" bottom="20"/>
+    </padding>
+
+    <!-- Header -->
+    <VBox spacing="5">
+        <Label text="Request Extension" style="-fx-font-size: 24px; -fx-text-fill: #1E3A8A; -fx-font-weight: bold;"/>
+        <Label text="Request a payment due date extension" style="-fx-font-size: 14px; -fx-text-fill: #6B7280;"/>
+    </VBox>
+
+    <!-- Current Due Date Card -->
+    <StackPane style="-fx-background-color: #E0F2FE; -fx-border-color: #BEE3F8; -fx-border-width: 2; -fx-padding: 16;">
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="📅" style="-fx-font-size: 24px;"/>
+            <VBox spacing="2">
+                <Label text="Current Due Date" style="-fx-text-fill: #6B7280; -fx-font-size: 12px;"/>
+                <Label text="December 15, 2025" style="-fx-text-fill: #1E3A8A; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+            </VBox>
+        </HBox>
+    </StackPane>
+
+    <!-- Extension Request Form -->
+    <VBox spacing="10" prefWidth="400">
+
+        <!-- Requested New Date -->
+        <VBox spacing="5">
+            <Label text="Requested New Date" style="-fx-font-weight: bold;"/>
+            <DatePicker fx:id="requestedDatePicker"/>
+        </VBox>
+
+        <!-- Reason -->
+        <VBox spacing="5">
+            <Label text="Reason for Extension" style="-fx-font-weight: bold;"/>
+            <TextArea fx:id="reasonTextArea" promptText="Please explain why you need an extension..." prefRowCount="6"/>
+        </VBox>
+
+        <!-- Submit Button Placeholder -->
+        <Label text="Submit Button Here (can be added in controller)" style="-fx-text-fill: #6B7280; -fx-font-style: italic;"/>
+
+    </VBox>
+
+</VBox>

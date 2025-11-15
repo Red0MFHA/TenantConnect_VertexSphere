@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      spacing="20"
+      prefWidth="800"
+      prefHeight="600"
+      alignment="TOP_LEFT">
+
+    <padding>
+        <Insets top="20" left="20" right="20" bottom="20"/>
+    </padding>
+
+    <!-- Header -->
+    <VBox spacing="5">
+        <Label text="Rent History" style="-fx-font-size: 24; -fx-text-fill: #1E3A8A; -fx-font-weight: bold;"/>
+        <Label text="View your complete payment history" style="-fx-font-size: 14; -fx-text-fill: #6B7280;"/>
+    </VBox>
+
+    <!-- Rent History Table -->
+    <TableView prefHeight="400" prefWidth="780">
+        <columns>
+            <TableColumn text="Month" prefWidth="120">
+                <cellValueFactory>
+                    <PropertyValueFactory property="month"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Amount" prefWidth="100">
+                <cellValueFactory>
+                    <PropertyValueFactory property="amount"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Paid Date" prefWidth="120">
+                <cellValueFactory>
+                    <PropertyValueFactory property="paidDate"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Payment Method" prefWidth="150">
+                <cellValueFactory>
+                    <PropertyValueFactory property="method"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Receipt #" prefWidth="150">
+                <cellValueFactory>
+                    <PropertyValueFactory property="receipt"/>
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+
+</VBox>

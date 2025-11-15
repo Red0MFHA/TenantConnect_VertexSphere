@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      spacing="24"
+      fx:controller="com.example.tenantconnect.Tenant.PayRentController">
+
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <!-- Header Section -->
+    <VBox spacing="8">
+        <Label text="Pay Rent">
+            <font>
+                <Font name="System Bold" size="32"/>
+            </font>
+        </Label>
+        <Label text="Submit your rent payment">
+            <font>
+                <Font size="14"/>
+            </font>
+        </Label>
+    </VBox>
+
+    <!-- Form Container -->
+    <VBox spacing="20" maxWidth="600">
+
+        <!-- Form Header -->
+        <VBox spacing="4">
+            <Label text="Rent Payment">
+                <font>
+                    <Font name="System Bold" size="20"/>
+                </font>
+            </Label>
+            <Label text="Enter payment details and upload receipt">
+                <font>
+                    <Font size="13"/>
+                </font>
+            </Label>
+        </VBox>
+
+        <Separator/>
+
+        <!-- Form Fields -->
+        <VBox spacing="24">
+
+            <!-- Amount Field -->
+            <VBox spacing="8">
+                <Label text="Amount">
+                    <font>
+                        <Font name="System Bold" size="13"/>
+                    </font>
+                </Label>
+
+                <TextField fx:id="amountTextField"
+                           promptText="1200"
+                           styleClass="form-text-field"/>
+            </VBox>
+
+            <!-- Due Date Field -->
+            <VBox spacing="8">
+                <Label text="Due Date">
+                    <font>
+                        <Font name="System Bold" size="13"/>
+                    </font>
+                </Label>
+                <TextField fx:id="dueDateTextField"
+                           text="2025-12-15"
+                           editable="false"/>
+            </VBox>
+
+            <!-- Payment Method Field -->
+            <VBox spacing="8">
+                <Label text="Payment Method">
+                    <font>
+                        <Font name="System Bold" size="13"/>
+                    </font>
+                </Label>
+                <ComboBox fx:id="paymentMethodComboBox" promptText="Select payment method"
+                          maxWidth="Infinity"/>
+            </VBox>
+
+            <!-- Receipt Upload Field -->
+            <VBox spacing="8">
+                <Label text="Upload Receipt">
+                    <font>
+                        <Font name="System Bold" size="13"/>
+                    </font>
+                </Label>
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <Button fx:id="uploadButton" text="Choose file"/>
+                    <Label fx:id="fileNameLabel" text="No file chosen"/>
+                </HBox>
+            </VBox>
+
+        </VBox>
+
+        <Separator/>
+
+        <!-- Submit Button -->
+        <HBox alignment="CENTER_RIGHT">
+            <Button text="Pay Now" fx:id="payButton" minWidth="150">
+                <font>
+                    <Font name="System Bold" size="13"/>
+                </font>
+            </Button>
+        </HBox>
+
+    </VBox>
+
+</VBox>

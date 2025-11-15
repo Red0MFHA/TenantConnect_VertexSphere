@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      spacing="20"
+      prefWidth="800"
+      prefHeight="600"
+      alignment="TOP_LEFT">
+
+    <padding>
+        <Insets top="20" left="20" right="20" bottom="20"/>
+    </padding>
+
+    <!-- Top welcome message -->
+    <VBox spacing="5">
+        <Label text="Welcome back, Tenant" style="-fx-font-size: 18;"/>
+        <Label text="Wednesday, November 12, 2025"/>
+    </VBox>
+
+    <!-- Quick action buttons (like React dashboard) -->
+    <GridPane hgap="10" vgap="10">
+        <Button text="Dashboard" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <Button text="Pay Rent" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <Button text="Rent Status" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+        <Button text="Rent History" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <Button text="File Complaint" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <Button text="Request Extension" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+        <Button text="Property Assignment" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    </GridPane>
+
+    <!-- Dashboard summary (quick info like React cards) -->
+    <VBox spacing="10">
+        <Label text="Dashboard Summary:" style="-fx-font-size: 16;"/>
+        <Label text="• Upcoming Rent Due: $500"/>
+        <Label text="• Last Complaint Status: Pending"/>
+        <Label text="• Current Property: Apartment 12B"/>
+    </VBox>
+
+</VBox>

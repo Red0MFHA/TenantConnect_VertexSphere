@@ -6,9 +6,12 @@ module com.example.tenantconnect {
 
     opens com.example.tenantconnect to javafx.fxml;
     opens com.example.tenantconnect.controllers to javafx.fxml;
+    opens com.example.tenantconnect.Tenant to javafx.fxml;
 
     opens com.example.tenantconnect.UIcontrollers to javafx.fxml;
     exports com.example.tenantconnect.UIcontrollers;
     exports com.example.tenantconnect;
     exports com.example.tenantconnect.controllers;
+    exports com.example.tenantconnect.Tenant;
+
 }

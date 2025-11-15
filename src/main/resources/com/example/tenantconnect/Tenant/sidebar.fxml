@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      spacing="20" prefWidth="250">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="TenantConnect"/>
+
+    <Separator/>
+
+    <VBox spacing="10">
+        <Label text="MAIN MENU"/>
+
+        <Button text="Dashboard" fx:id="dashboardBtn" maxWidth="Infinity"/>
+        <Button text="File Complaint" fx:id="fileComplaintBtn" maxWidth="Infinity"/>
+        <Button text="Pay Rent" fx:id="payRentBtn" maxWidth="Infinity"/>
+    </VBox>
+
+    <VBox spacing="10" VBox.vgrow="ALWAYS">
+        <Label text="ACCOUNT"/>
+        <Button text="Profile" fx:id="profileBtn" maxWidth="Infinity"/>
+        <Button text="Settings" fx:id="settingsBtn" maxWidth="Infinity"/>
+        <Button text="Logout" fx:id="logoutBtn" maxWidth="Infinity"/>
+    </VBox>
+
+</VBox>
