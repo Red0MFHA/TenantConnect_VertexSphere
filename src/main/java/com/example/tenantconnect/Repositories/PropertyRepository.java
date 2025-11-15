@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import com.example.tenantconnect.Domain.Property;
 
 public class PropertyRepository {
 
@@ -13,6 +14,25 @@ public class PropertyRepository {
     public PropertyRepository() {
         this.dbHandler = DB_Handler.getInstance();
         ensureTableExists(); // Auto-create the table if not found
+    }
+
+
+    //creating mapping function for db->property
+    private Property mapResultSetToProperty(ResultSet rs) throws SQLException {
+        Property p = new Property();
+        p.setProperty_id(rs.getInt("property_id"));
+        p.setOwner_id(rs.getInt("owner_id"));
+        p.setProperty_name(rs.getString("property_name"));
+        p.setAddress(rs.getString("address"));
+        p.setCity(rs.getString("city"));
+        p.setState(rs.getString("state"));
+        p.setZip_code(rs.getString("zip_code"));
+        p.setProperty_type(rs.getString("property_type"));
+        p.setRent_amount(rs.getDouble("rent_amount"));
+        p.setSecurity_deposit(rs.getDouble("security_deposit"));
+        p.setStatus(rs.getString("status"));
+        p.setCreated_at(rs.getString("created_at"));
+        return p;
     }
 
     // Create the table if missing
@@ -60,15 +80,30 @@ public class PropertyRepository {
     }
 
     // Get all properties by owner ID
-    public List<String> getPropertiesByOwnerId(int ownerId) {
-        List<String> properties = new ArrayList<>();
+//    public List<String> getPropertiesByOwnerId(int ownerId) {
+//        List<String> properties = new ArrayList<>();
+//        String sql = "SELECT * FROM properties WHERE owner_id = " + ownerId;
+//        ResultSet rs = dbHandler.executeSelect(sql);
+//        try {
+//            while (rs != null && rs.next()) {
+//                String info = rs.getInt("property_id") + " - " + rs.getString("property_name") +
+//                        " (" + rs.getString("status") + ") - Rent: " + rs.getDouble("rent_amount");
+//                properties.add(info);
+//            }
+//            if (rs != null) rs.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return properties;
+//    }
+    public List<Property> getPropertiesByOwnerId(int ownerId) {
+        List<Property> properties = new ArrayList<>();
         String sql = "SELECT * FROM properties WHERE owner_id = " + ownerId;
         ResultSet rs = dbHandler.executeSelect(sql);
+
         try {
             while (rs != null && rs.next()) {
-                String info = rs.getInt("property_id") + " - " + rs.getString("property_name") +
-                        " (" + rs.getString("status") + ") - Rent: " + rs.getDouble("rent_amount");
-                properties.add(info);
+                properties.add(mapResultSetToProperty(rs));
             }
             if (rs != null) rs.close();
         } catch (SQLException e) {
@@ -78,15 +113,31 @@ public class PropertyRepository {
     }
 
     // Get property by ID
-    public String getPropertyById(int propertyId) {
+//    public String getPropertyById(int propertyId) {
+//        String sql = "SELECT * FROM properties WHERE property_id = " + propertyId;
+//        ResultSet rs = dbHandler.executeSelect(sql);
+//        try {
+//            if (rs != null && rs.next()) {
+//                String result = rs.getInt("property_id") + " - " + rs.getString("property_name") +
+//                        " (" + rs.getString("city") + ", " + rs.getString("status") + ")";
+//                rs.close();
+//                return result;
+//            }
+//            if (rs != null) rs.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+    public Property getPropertyById(int propertyId) {
         String sql = "SELECT * FROM properties WHERE property_id = " + propertyId;
         ResultSet rs = dbHandler.executeSelect(sql);
+
         try {
             if (rs != null && rs.next()) {
-                String result = rs.getInt("property_id") + " - " + rs.getString("property_name") +
-                        " (" + rs.getString("city") + ", " + rs.getString("status") + ")";
+                Property p = mapResultSetToProperty(rs);
                 rs.close();
-                return result;
+                return p;
             }
             if (rs != null) rs.close();
         } catch (SQLException e) {
@@ -123,18 +174,14 @@ public class PropertyRepository {
     }
 
     // Optional utility: Get all properties (admin/debug)
-    public List<String> getAllProperties() {
-        List<String> properties = new ArrayList<>();
+    public List<Property> getAllProperties() {
+        List<Property> properties = new ArrayList<>();
         String sql = "SELECT * FROM properties";
         ResultSet rs = dbHandler.executeSelect(sql);
+
         try {
             while (rs != null && rs.next()) {
-                properties.add(
-                        rs.getInt("property_id") + " | " +
-                                rs.getString("property_name") + " | " +
-                                rs.getString("city") + " | Status: " +
-                                rs.getString("status")
-                );
+                properties.add(mapResultSetToProperty(rs));
             }
             if (rs != null) rs.close();
         } catch (SQLException e) {
@@ -142,4 +189,24 @@ public class PropertyRepository {
         }
         return properties;
     }
+
+//    public List<String> getAllProperties() {
+//        List<String> properties = new ArrayList<>();
+//        String sql = "SELECT * FROM properties";
+//        ResultSet rs = dbHandler.executeSelect(sql);
+//        try {
+//            while (rs != null && rs.next()) {
+//                properties.add(
+//                        rs.getInt("property_id") + " | " +
+//                                rs.getString("property_name") + " | " +
+//                                rs.getString("city") + " | Status: " +
+//                                rs.getString("status")
+//                );
+//            }
+//            if (rs != null) rs.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return properties;
+//    }
 }
