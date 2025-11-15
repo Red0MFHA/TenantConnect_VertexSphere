@@ -1,0 +1,230 @@
+package com.example.tenantconnect.Repositories;
+
+import com.example.tenantconnect.Domain.Payment;
+import com.example.tenantconnect.Domain.PaymentExtension;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PaymentRepository {
+
+    private DB_Handler dbHandler;
+
+    public PaymentRepository() {
+        this.dbHandler = DB_Handler.getInstance();
+        createPaymentsTable();
+    }
+
+    // Create payments table
+    private void createPaymentsTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS payments (" +
+                "payment_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "contract_id INTEGER NOT NULL," +
+                "payment_date DATE," +
+                "due_date DATE NOT NULL," +
+                "amount_due DECIMAL(10,2) NOT NULL," +
+                "amount_paid DECIMAL(10,2)," +
+                "payment_status VARCHAR(20) CHECK(payment_status IN ('pending', 'paid', 'overdue', 'extension_requested')) DEFAULT 'pending'," +
+                "paid_date DATE," +
+                "created_at DATETIME DEFAULT CURRENT_TIMESTAMP," +
+                "FOREIGN KEY (contract_id) REFERENCES contracts(contract_id) ON DELETE CASCADE" +
+                ");";
+        dbHandler.executeQuery(sql);
+    }
+
+    // Insert payment
+    public void addPayment(Payment p) {
+        String sql = "INSERT INTO payments (contract_id, payment_date, due_date, amount_due, amount_paid, payment_status) " +
+                "VALUES (" + p.getContract_id() + ", '" + p.getPayment_date() + "', '" + p.getDue_date() + "', " +
+                p.getAmount_due() + ", " + p.getAmount_paid() + ", '" + p.getPayment_status() + "');";
+        dbHandler.executeQuery(sql);
+    }
+
+    // Update payment status or amounts
+    public void updatePayment(Payment p) {
+        String sql = "UPDATE payments SET payment_date = '" + p.getPayment_date() + "', " +
+                "due_date = '" + p.getDue_date() + "', " +
+                "amount_due = " + p.getAmount_due() + ", " +
+                "amount_paid = " + p.getAmount_paid() + ", " +
+                "payment_status = '" + p.getPayment_status() + "' " +
+                "WHERE payment_id = " + p.getPayment_id() + ";";
+        dbHandler.executeQuery(sql);
+    }
+
+    // Delete payment
+    public void deletePayment(int paymentId) {
+        String sql = "DELETE FROM payments WHERE payment_id = " + paymentId + ";";
+        dbHandler.executeQuery(sql);
+    }
+
+    // Retrieve payments by contract
+    public List<Payment> getPaymentsByContract(int contractId) {
+        List<Payment> payments = new ArrayList<>();
+        String sql = "SELECT * FROM payments WHERE contract_id = " + contractId + " ORDER BY due_date ASC;";
+        try (ResultSet rs = dbHandler.executeSelect(sql)) {
+            while (rs != null && rs.next()) {
+                payments.add(mapResultSetToPayment(rs));
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return payments;
+    }
+
+    private Payment mapResultSetToPayment(ResultSet rs) throws SQLException {
+        Payment p = new Payment();
+        p.setPayment_id(rs.getInt("payment_id"));
+        p.setContract_id(rs.getInt("contract_id"));
+        p.setPayment_date(rs.getString("payment_date"));
+        p.setDue_date(rs.getString("due_date"));
+        p.setAmount_due(rs.getFloat("amount_due"));
+        p.setAmount_paid(rs.getFloat("amount_paid"));
+        p.setPayment_status(rs.getString("payment_status"));
+        p.setCreated_at(rs.getString("created_at"));
+        return p;
+    }
+
+
+    private void createExtensionsTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS payment_extensions (" +
+                "extension_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "payment_id INTEGER NOT NULL," +
+                "tenant_id INTEGER NOT NULL," +
+                "current_due_date DATE NOT NULL," +
+                "requested_due_date DATE NOT NULL," +
+                "reason TEXT," +
+                "status VARCHAR(20) CHECK(status IN ('pending', 'approved', 'rejected')) DEFAULT 'pending'," +
+                "responded_at DATETIME," +
+                "created_at DATETIME DEFAULT CURRENT_TIMESTAMP," +
+                "FOREIGN KEY (payment_id) REFERENCES payments(payment_id) ON DELETE CASCADE," +
+                "FOREIGN KEY (tenant_id) REFERENCES users(user_id) ON DELETE CASCADE" +
+                ");";
+        dbHandler.executeQuery(sql);
+    }
+
+    // Insert extension request
+    public void addPaymentExtension(PaymentExtension ext) {
+        String sql = "INSERT INTO payment_extensions (payment_id, tenant_id, current_due_date, requested_due_date, reason, status) " +
+                "VALUES (" + ext.getPayment_id() + ", " + ext.getTenant_id() + ", '" + ext.getCurrent_due_date() + "', '" +
+                ext.getRequested_due_date() + "', '" + ext.getReason() + "', '" + ext.getStatus() + "');";
+        dbHandler.executeQuery(sql);
+    }
+
+    // Update extension status (approve/reject)
+    public void updatePaymentExtensionStatus(int extensionId, String status) {
+        String sql = "UPDATE payment_extensions SET status = '" + status + "', responded_at = CURRENT_TIMESTAMP " +
+                "WHERE extension_id = " + extensionId + ";";
+        dbHandler.executeQuery(sql);
+    }
+
+    // Delete extension
+    public void deletePaymentExtension(int extensionId) {
+        String sql = "DELETE FROM payment_extensions WHERE extension_id = " + extensionId + ";";
+        dbHandler.executeQuery(sql);
+    }
+
+    // Retrieve extensions for a specific payment
+    public List<PaymentExtension> getExtensionsByPayment(int paymentId) {
+        List<PaymentExtension> extensions = new ArrayList<>();
+        String sql = "SELECT * FROM payment_extensions WHERE payment_id = " + paymentId + " ORDER BY created_at ASC;";
+        try (ResultSet rs = dbHandler.executeSelect(sql)) {
+            while (rs != null && rs.next()) {
+                extensions.add(mapResultSetToExtension(rs));
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return extensions;
+    }
+
+    //map for payment extension
+    private PaymentExtension mapResultSetToExtension(ResultSet rs) throws SQLException {
+        PaymentExtension ext = new PaymentExtension();
+        ext.setExtension_id(rs.getInt("extension_id"));
+        ext.setPayment_id(rs.getInt("payment_id"));
+        ext.setTenant_id(rs.getInt("tenant_id"));
+        ext.setCurrent_due_date(rs.getString("current_due_date"));
+        ext.setRequested_due_date(rs.getString("requested_due_date"));
+        ext.setReason(rs.getString("reason"));
+        ext.setStatus(rs.getString("status"));
+        ext.setCreated_at(rs.getString("created_at"));
+        return ext;
+    }
+
+    // Retrieve all due payments for a specific tenant (amount_due > amount_paid or status pending/overdue)
+    public List<Payment> getDuePaymentsByTenant(int tenantId) {
+        List<Payment> payments = new ArrayList<>();
+        String sql = "SELECT p.* FROM payments p " +
+                "JOIN contracts c ON p.contract_id = c.contract_id " +
+                "WHERE c.tenant_id = " + tenantId + " " +
+                "AND (p.payment_status = 'pending' OR p.payment_status = 'overdue');";
+        try (ResultSet rs = dbHandler.executeSelect(sql)) {
+            while (rs != null && rs.next()) {
+                payments.add(mapResultSetToPayment(rs));
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return payments;
+    }
+
+    // Retrieve all due payments for properties of a specific owner
+    public List<Payment> getDuePaymentsByOwner(int ownerId) {
+        List<Payment> payments = new ArrayList<>();
+        String sql = "SELECT p.* FROM payments p " +
+                "JOIN contracts c ON p.contract_id = c.contract_id " +
+                "JOIN properties pr ON c.property_id = pr.property_id " +
+                "WHERE pr.owner_id = " + ownerId + " " +
+                "AND (p.payment_status = 'pending' OR p.payment_status = 'overdue');";
+        try (ResultSet rs = dbHandler.executeSelect(sql)) {
+            while (rs != null && rs.next()) {
+                payments.add(mapResultSetToPayment(rs));
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return payments;
+    }
+    // Retrieve unresolved payment extensions for a specific tenant
+    public List<PaymentExtension> getUnresolvedExtensionsByTenant(int tenantId) {
+        List<PaymentExtension> extensions = new ArrayList<>();
+        String sql = "SELECT * FROM payment_extensions " +
+                "WHERE tenant_id = " + tenantId + " AND status = 'pending' " +
+                "ORDER BY created_at ASC;";
+        try (ResultSet rs = dbHandler.executeSelect(sql)) {
+            while (rs != null && rs.next()) {
+                extensions.add(mapResultSetToExtension(rs));
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return extensions;
+    }
+
+    // Retrieve unresolved payment extensions for all payments belonging to properties of a specific owner
+    public List<PaymentExtension> getUnresolvedExtensionsByOwner(int ownerId) {
+        List<PaymentExtension> extensions = new ArrayList<>();
+        String sql = "SELECT pe.* FROM payment_extensions pe " +
+                "JOIN payments p ON pe.payment_id = p.payment_id " +
+                "JOIN contracts c ON p.contract_id = c.contract_id " +
+                "JOIN properties pr ON c.property_id = pr.property_id " +
+                "WHERE pr.owner_id = " + ownerId + " AND pe.status = 'pending' " +
+                "ORDER BY pe.created_at ASC;";
+        try (ResultSet rs = dbHandler.executeSelect(sql)) {
+            while (rs != null && rs.next()) {
+                extensions.add(mapResultSetToExtension(rs));
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return extensions;
+    }
+
+}
