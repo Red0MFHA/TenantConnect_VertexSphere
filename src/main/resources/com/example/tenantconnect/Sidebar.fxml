@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Region?>
+
+<VBox prefWidth="256.0" styleClass="sidebar-container" xmlns:fx="http://javafx.com/fxml"
+     >
+    <!-- VBox className="w-64 bg-[#1E3A8A] text-white flex flex-col" -->
+
+    <!-- Header (p-6 border-b border-[#2563EB]) -->
+    <VBox spacing="4.0" styleClass="sidebar-header">
+        <HBox alignment="CENTER_LEFT" spacing="8.0" style="-fx-margin-bottom: 8px;">
+            <StackPane>
+                <!-- Building2 (Placeholder: SVG or Text) -->
+                <Label text="🏠" style="-fx-font-size: 24px; -fx-text-fill: white;"/>
+                <!-- Crown (Absolute Position Placeholder) -->
+                <Label text="👑" StackPane.alignment="TOP_RIGHT"
+                       style="-fx-font-size: 10px; -fx-translate-x: 5px; -fx-translate-y: -5px;"/>
+            </StackPane>
+            <Label text="TenantConnect" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+        </HBox>
+        <Label text="Property Owner" style="-fx-text-fill: #E0F2FE; -fx-font-size: 12px;"/>
+    </VBox>
+
+    <!-- Navigation (nav className="flex-1 p-4 space-y-1") -->
+    <VBox spacing="4.0" style="-fx-padding: 16px;" VBox.vgrow="ALWAYS">
+        <!-- Dashboard Button -->
+        <Button text=" Dashboard" styleClass="sidebar-button" id="dashboard"
+                style="-fx-graphic: '📊'; -fx-graphic-text-gap: 8; -fx-font-weight: bold;"/>
+
+        <!-- Listings Button (Active State Example) -->
+        <Button text=" Listings" styleClass="sidebar-button"  id="listings"
+                style="-fx-graphic: '🏡'; -fx-graphic-text-gap: 8;"/>
+
+        <!-- Assign Tenants Button (Active State - bg-[#F97316]) -->
+        <Button text=" Assign Tenants" styleClass="sidebar-button-active"  id="assign-tenants"
+                style="-fx-graphic: '🧑‍🤝‍🧑'; -fx-graphic-text-gap: 8;"/>
+
+        <!-- Rent Tracking Button -->
+        <Button text=" Rent Tracking" styleClass="sidebar-button"  id="rent-tracking"
+                style="-fx-graphic: '💵'; -fx-graphic-text-gap: 8;"/>
+
+        <!-- Complaints Button -->
+        <Button text=" Complaints" styleClass="sidebar-button"  id="complaints"
+                style="-fx-graphic: '💬'; -fx-graphic-text-gap: 8;"/>
+
+        <!-- Reports Button -->
+        <Button text=" Reports" styleClass="sidebar-button"  id="reports"
+                style="-fx-graphic: '📄'; -fx-graphic-text-gap: 8;"/>
+
+        <!-- Spacer to push Logout down (flex-1) -->
+        <Region VBox.vgrow="ALWAYS"/>
+    </VBox>
+
+    <!-- Footer (p-4 border-t border-[#2563EB]) -->
+    <VBox styleClass="sidebar-footer">
+        <!-- Logout Button -->
+        <Button text=" Logout" styleClass="sidebar-logout-button"
+                style="-fx-graphic: '🚪'; -fx-graphic-text-gap: 12;"/>
+    </VBox>
+</VBox>
