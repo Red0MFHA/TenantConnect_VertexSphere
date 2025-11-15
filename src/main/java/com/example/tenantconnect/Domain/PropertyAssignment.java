@@ -1,9 +1,10 @@
 package com.example.tenantconnect.Domain;
 
 public class PropertyAssignment {
-    int id;
-    int ownerId;
-    int propertyId;
-    String propertyName;
-    int tennantId;
+    public int id;
+    public int ownerId;
+    public int propertyId;
+    public String propertyName;
+    public int tenantId;
+    public int contractId;
 }

@@ -44,6 +44,20 @@ CREATE TABLE contracts (
                            FOREIGN KEY (tenant_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
+--Property Assignment
+CREATE TABLE property_assignments (
+                                      id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                      owner_id INTEGER NOT NULL,
+                                      property_id INTEGER NOT NULL,
+                                      property_name TEXT NOT NULL,
+                                      tenant_id INTEGER,
+                                      contract_id INTEGER,
+
+                                      FOREIGN KEY (owner_id) REFERENCES users(user_id) ON DELETE CASCADE,
+                                      FOREIGN KEY (property_id) REFERENCES properties(property_id) ON DELETE CASCADE,
+                                      FOREIGN KEY (tenant_id) REFERENCES users(user_id) ON DELETE SET NULL,
+                                      FOREIGN KEY (contract_id) REFERENCES contracts(contract_id) ON DELETE CASCADE
+);
 
 
 -- Rent payments table
@@ -118,3 +132,4 @@ CREATE TABLE notification_settings (
                                        FOREIGN KEY (owner_id) REFERENCES users(user_id) ON DELETE CASCADE,
                                        UNIQUE(owner_id, notification_type)
 );
+
