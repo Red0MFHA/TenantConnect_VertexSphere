@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<VBox spacing="24.0" styleClass="page-container" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.tenantconnect.controllers.OwnerController">
+    <VBox spacing="8.0">
+        <Label text="Assign Tenants" style="-fx-text-fill: #1E3A8A; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <Label text="Send property invitations to tenants" style="-fx-text-fill: #6B7280;"/>
+    </VBox>
+
+    <VBox maxWidth="600.0">
+        <VBox styleClass="universal-card">
+            <VBox styleClass="card-header" spacing="4.0"
+                  style="-fx-background-color: #E0F2FE; -fx-padding: 16;">
+                <Label text="Send Tenant Invitation"
+                       style="-fx-text-fill: #1E3A8A; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+                <Label text="Select a property and enter tenant details"
+                       style="-fx-text-fill: #6B7280; -fx-font-size: 12px;"/>
+            </VBox>
+
+            <VBox spacing="24.0" style="-fx-padding: 24;">
+                <VBox spacing="4.0">
+                    <Label text="Select Property" styleClass="form-label"/>
+                    <ComboBox fx:id="propertyComboBox" promptText="Choose a property" prefWidth="1.7976931348623157E308">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Sunset Apartments - Unit 101"/>
+                                <String fx:value="Ocean View Residency - Unit 205"/>
+                                <String fx:value="Mountain Lodge - Unit 303"/>
+                                <String fx:value="Downtown Plaza - Unit 412"/>
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                </VBox>
+
+                <VBox spacing="4.0">
+                    <Label text="Tenant Email" styleClass="form-label"/>
+                    <TextField fx:id="tenantEmailField" promptText="Enter tenant's email address"/>
+                </VBox>
+
+                <Button text="Send Invitation"  prefWidth="1.7976931348623157E308"
+                        style="-fx-background-color: #F97316; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 0;"/>
+            </VBox>
+        </VBox>
+    </VBox>
+</VBox>

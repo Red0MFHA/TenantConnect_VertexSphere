@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.tenantconnect.UIcontrollers.AppLayoutController"
+            prefHeight="700.0" prefWidth="1200.0"
+            stylesheets="@Applicationstyle.css">
+
+    <!-- WEST: Sidebar (w-64) -->
+    <left>
+        <fx:include fx:id="sidebar" source="Sidebar.fxml"/>
+    </left>
+
+    <!-- CENTER: Main Content Area (TopBar + Scrollable AssignTenants) -->
+    <center>
+        <VBox>
+            <!-- NORTH (within CENTER): Top Bar -->
+            <fx:include fx:id="topBar" source="topbar.fxml"/>
+
+            <!-- REST OF CENTER: Scrollable Content -->
+
+            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;">
+                <VBox alignment="TOP_LEFT" style="-fx-padding: 32px; -fx-background-color: #F8FAFC;">
+
+                    <!-- THIS IS THE NEW PLACEHOLDER CONTAINER -->
+                    <StackPane fx:id="mainContentArea" VBox.vgrow="ALWAYS"/>
+
+                </VBox>
+            </ScrollPane>
+        </VBox>
+    </center>
+</BorderPane>

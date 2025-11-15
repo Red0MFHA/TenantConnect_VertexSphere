@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+<?import java.lang.String?>
+
+<VBox spacing="24.0" styleClass="rent-tracking-view" xmlns:fx="http://javafx.com/fxml"
+    >
+
+    <VBox spacing="8.0">
+        <Label text="Rent Tracking" style="-fx-text-fill: #1E3A8A; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <Label text="Monitor rent payments and send reminders" style="-fx-text-fill: #6B7280;"/>
+    </VBox>
+
+    <TableView fx:id="rentTable" VBox.vgrow="ALWAYS" styleClass="universal-table">
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+        </columnResizePolicy>
+
+        <columns>
+            <TableColumn fx:id="tenantColumn" text="Tenant" prefWidth="120.0"/>
+            <TableColumn fx:id="propertyColumn" text="Property" prefWidth="180.0"/>
+            <TableColumn fx:id="dueDateColumn" text="Due Date" prefWidth="100.0"/>
+            <TableColumn fx:id="amountColumn" text="Amount" prefWidth="80.0"/>
+            <TableColumn fx:id="statusColumn" text="Status" prefWidth="80.0"/>
+            <TableColumn fx:id="actionsColumn" text="Actions" minWidth="150.0" prefWidth="180.0" resizable="false"/>
+        </columns>
+    </TableView>
+
+    <stylesheets>
+        <String fx:value="@../Applicationstyle.css"/>
+    </stylesheets>
+</VBox>

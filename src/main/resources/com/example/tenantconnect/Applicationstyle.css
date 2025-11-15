@@ -1,0 +1,136 @@
+/* --- Global Styles --- */
+.root {
+    -fx-font-family: "Inter", "Helvetica", sans-serif;
+}
+
+/* --- Sidebar Styles (sidebar.tsx) --- */
+.sidebar-container {
+    -fx-background-color: #1E3A8A; /* bg-[#1E3A8A] */
+    -fx-border-color: #2563EB;
+    -fx-border-width: 0 1px 0 0; /* border-r border-[#2563EB] */
+}
+
+.sidebar-header {
+    -fx-padding: 24px; /* p-6 */
+    -fx-border-color: #2563EB;
+    -fx-border-width: 0 0 1px 0; /* border-b border-[#2563EB] */
+}
+
+.sidebar-footer {
+    -fx-padding: 16px; /* p-4 */
+    -fx-border-color: #2563EB;
+    -fx-border-width: 1px 0 0 0; /* border-t border-[#2563EB] */
+}
+
+.sidebar-button, .sidebar-logout-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #E0F2FE; /* text-[#E0F2FE] */
+    -fx-alignment: CENTER_LEFT; /* justify-start */
+    -fx-pref-width: 256px; /* w-full */
+    -fx-padding: 12px 16px; /* py-3 px-4 */
+    -fx-background-radius: 8px; /* rounded-lg */
+}
+
+.sidebar-button:hover, .sidebar-logout-button:hover {
+    -fx-background-color: #2563EB; /* hover:bg-[#2563EB] */
+    -fx-text-fill: white;
+}
+
+/* Active Button Style (Assign Tenants) */
+.sidebar-button-active {
+    -fx-background-color: #F97316; /* bg-[#F97316] */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+    -fx-pref-width: 256px;
+    -fx-padding: 12px 16px;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0.5, 0, 0); /* shadow-lg */
+}
+
+/* --- TopBar Styles (topbar.tsx) --- */
+.topbar-container {
+    -fx-background-color: white; /* bg-white */
+    -fx-border-color: #E5E7EB; /* border-gray-200 */
+    -fx-border-width: 0 0 1px 0; /* border-b */
+    -fx-padding: 0 32px; /* px-8 */
+    -fx-pref-height: 64px; /* h-16 */
+    -fx-min-height: 64px;
+}
+
+.notification-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 50%;
+    -fx-padding: 8px;
+}
+
+.notification-button:hover {
+    -fx-background-color: #F3F4F6; /* light hover effect */
+}
+
+.notification-badge {
+    -fx-background-color: #F97316; /* bg-[#F97316] */
+    -fx-text-fill: white;
+    -fx-padding: 2px 6px;
+    -fx-background-radius: 12px;
+    -fx-font-size: 10px; /* text-xs */
+    -fx-translate-x: 6px;
+    -fx-translate-y: -6px;
+}
+
+.profile-badge {
+    -fx-background-color: #E0F2FE; /* bg-[#E0F2FE] */
+    -fx-padding: 8px 12px; /* px-3 py-2 */
+    -fx-background-radius: 8px; /* rounded-lg */
+}
+
+/* --- UniversalForm Card Styles (universalform.tsx) --- */
+.universal-card {
+    -fx-border-color: #E0F2FE; /* border-2 border-[#E0F2FE] */
+    -fx-border-width: 2px;
+    -fx-background-color: white;
+    -fx-border-radius: 8px;
+}
+
+.card-header {
+    -fx-background-color: #E0F2FE; /* bg-[#E0F2FE] */
+    -fx-padding: 24px;
+    -fx-background-radius: 6px 6px 0 0; /* rounded top edges */
+}
+
+/* --- Form/Table component styling (AssignTenants.fxml) --- */
+
+.text-field, .combo-box {
+    -fx-background-color: #F8FAFC; /* Placeholder for input background color */
+    -fx-border-color: #D1D5DB;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-padding: 8px 12px;
+}
+
+/* --- PRIMARY BUTTON (#F97316 - Orange) --- */
+.button-primary {
+    -fx-background-color: #F97316; /* Tailwind orange-600/700 */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+
+.button-primary:hover {
+    -fx-background-color: #EA580C; /* Darker orange on hover */
+}
+
+/* --- OUTLINE BUTTON (White background, Blue border/text) --- */
+.button-outline {
+    -fx-background-color: white;
+    -fx-border-color: #E0F2FE; /* Tailwind blue-100 border */
+    -fx-border-width: 1px;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-text-fill: #1E3A8A; /* Tailwind blue-800 text */
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
