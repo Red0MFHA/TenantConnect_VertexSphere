@@ -212,7 +212,21 @@ public class ContractRepository {
         return contracts;
     }
 
+    public List<Contract> getContractsByPropertyAndTenant(int propertyId,int tenantId) {
+        List<Contract> contracts = new ArrayList<>();
+        String sql = "SELECT * FROM contracts WHERE property_id = " + propertyId + " AND tenant_id = " + tenantId;
+        ResultSet rs = dbHandler.executeSelect(sql);
 
+        try {
+            while (rs != null && rs.next()) {
+                contracts.add(mapToContract(rs));
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contracts;
+    }
     //  Get contract by ID
     public Contract getContractById(int contractId) {
         String sql = "SELECT * FROM contracts WHERE contract_id = " + contractId;

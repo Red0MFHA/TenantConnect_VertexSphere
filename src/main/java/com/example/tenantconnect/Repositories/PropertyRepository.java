@@ -189,7 +189,21 @@ public class PropertyRepository {
         }
         return properties;
     }
+    public List<Property> getAllVacantProperties(int ownerId) {
+        List<Property> properties = new ArrayList<>();
+        String sql = "SELECT * FROM properties where status = 'vacant' AND owner_id ='" + ownerId + "'";
+        ResultSet rs = dbHandler.executeSelect(sql);
 
+        try {
+            while (rs != null && rs.next()) {
+                properties.add(mapResultSetToProperty(rs));
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return properties;
+    }
 //    public List<String> getAllProperties() {
 //        List<String> properties = new ArrayList<>();
 //        String sql = "SELECT * FROM properties";
