@@ -8,9 +8,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Tooltip?>
 
-<VBox prefWidth="256.0" styleClass="sidebar-container" xmlns:fx="http://javafx.com/fxml"
-     >
+<!-- CRITICAL FIX: Added fx:controller and the necessary namespace alias (xmlns:fx) -->
+<VBox prefWidth="256.0" styleClass="sidebar-container"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.tenantconnect.UIcontrollers.SidebarController">
     <!-- VBox className="w-64 bg-[#1E3A8A] text-white flex flex-col" -->
 
     <!-- Header (p-6 border-b border-[#2563EB]) -->
@@ -29,30 +32,46 @@
     </VBox>
 
     <!-- Navigation (nav className="flex-1 p-4 space-y-1") -->
-    <VBox spacing="4.0" style="-fx-padding: 16px;" VBox.vgrow="ALWAYS">
+    <!-- Added fx:id="navigationVBox" for robust collection in the controller (optional but recommended) -->
+    <VBox fx:id="navigationVBox" spacing="4.0" style="-fx-padding: 16px;" VBox.vgrow="ALWAYS">
         <!-- Dashboard Button -->
+        <!-- CRITICAL FIX: Added onAction="#handleNavigationClick" -->
         <Button text=" Dashboard" styleClass="sidebar-button" id="dashboard"
-                style="-fx-graphic: '📊'; -fx-graphic-text-gap: 8; -fx-font-weight: bold;"/>
+                style="-fx-graphic: '📊'; -fx-graphic-text-gap: 8; -fx-font-weight: bold;"
+                onAction="#handleNavigationClick"/>
 
         <!-- Listings Button (Active State Example) -->
+        <!-- CRITICAL FIX: Added onAction="#handleNavigationClick" -->
         <Button text=" Listings" styleClass="sidebar-button"  id="listings"
-                style="-fx-graphic: '🏡'; -fx-graphic-text-gap: 8;"/>
+                style="-fx-graphic: '🏡'; -fx-graphic-text-gap: 8;"
+                onAction="#handleNavigationClick"/>
 
         <!-- Assign Tenants Button (Active State - bg-[#F97316]) -->
-        <Button text=" Assign Tenants" styleClass="sidebar-button-active"  id="assign-tenants"
-                style="-fx-graphic: '🧑‍🤝‍🧑'; -fx-graphic-text-gap: 8;"/>
+        <!-- CRITICAL FIX: Added onAction="#handleNavigationClick" -->
+        <Button text=" Assign Tenants" styleClass="sidebar-button"  id="assign-tenants"
+                style="-fx-graphic: '🧑‍🤝‍🧑'; -fx-graphic-text-gap: 8;"
+                onAction="#handleNavigationClick"/>
 
         <!-- Rent Tracking Button -->
+        <!-- CRITICAL FIX: Added onAction="#handleNavigationClick" -->
         <Button text=" Rent Tracking" styleClass="sidebar-button"  id="rent-tracking"
-                style="-fx-graphic: '💵'; -fx-graphic-text-gap: 8;"/>
+                style="-fx-graphic: '💵'; -fx-graphic-text-gap: 8;"
+                onAction="#handleNavigationClick"/>
 
         <!-- Complaints Button -->
+        <!-- CRITICAL FIX: Added onAction="#handleNavigationClick" -->
         <Button text=" Complaints" styleClass="sidebar-button"  id="complaints"
-                style="-fx-graphic: '💬'; -fx-graphic-text-gap: 8;"/>
+                style="-fx-graphic: '💬'; -fx-graphic-text-gap: 8;"
+                onAction="#handleNavigationClick"/>
+        <Button text="Extensions" styleClass="sidebar-button"  id="extensions" style="-fx-graphic: '💬'; -fx-graphic-text-gap: 8;" onAction="#handleNavigationClick"/>
 
+        <Button text="Contracts" styleClass="sidebar-button"  id="contracts" style="-fx-graphic: '💬'; -fx-graphic-text-gap: 8;" onAction="#handleNavigationClick"/>
         <!-- Reports Button -->
+        <!-- CRITICAL FIX: Added onAction="#handleNavigationClick" -->
         <Button text=" Reports" styleClass="sidebar-button"  id="reports"
-                style="-fx-graphic: '📄'; -fx-graphic-text-gap: 8;"/>
+                style="-fx-graphic: '📄'; -fx-graphic-text-gap: 8;"
+                onAction="#handleNavigationClick"/>
+
 
         <!-- Spacer to push Logout down (flex-1) -->
         <Region VBox.vgrow="ALWAYS"/>
@@ -61,7 +80,9 @@
     <!-- Footer (p-4 border-t border-[#2563EB]) -->
     <VBox styleClass="sidebar-footer">
         <!-- Logout Button -->
-        <Button text=" Logout" styleClass="sidebar-logout-button"
-                style="-fx-graphic: '🚪'; -fx-graphic-text-gap: 12;"/>
+        <!-- CRITICAL FIX: Added onAction="#handleNavigationClick" and id="logout" -->
+        <Button text=" Logout" styleClass="sidebar-logout-button" id="logout"
+                style="-fx-graphic: '🚪'; -fx-graphic-text-gap: 12;"
+                onAction="#handleNavigationClick"/>
     </VBox>
 </VBox>

@@ -3,14 +3,10 @@
 <?import javafx.scene.chart.AreaChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.geometry.Insets?>
 <?import java.lang.String?>
-<?import javafx.scene.control.ScrollPane?>
 
 <VBox spacing="24.0" styleClass="dashboard-view" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.tenantconnect.UIcontrollers.OwnerDashboardController">
@@ -41,22 +37,11 @@
                 <yAxis>
                     <NumberAxis label="Revenue (USD)" fx:id="yAxis" side="LEFT" />
                 </yAxis>
-                <!-- Removed the redundant chart-styles.css reference -->
             </AreaChart>
         </VBox>
     </VBox>
 
-    <!-- Quick Actions Card -->
-    <!-- Consolidated styles into a single 'style' attribute -->
-    <VBox style="-fx-border-color: #E0F2FE; -fx-border-width: 2px; -fx-background-color: white; -fx-background-radius: 8;">
-        <!-- Consolidated styles into a single 'style' attribute -->
-        <Label text="Quick Actions"
-               style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1E3A8A; -fx-padding: 10; -fx-background-color: #E0F2FE; -fx-max-width: infinity;"/>
-
-        <GridPane fx:id="actionsGrid" hgap="15.0" vgap="15.0" style="-fx-padding: 15;">
-            <!-- Actions buttons will be dynamically populated by the controller -->
-        </GridPane>
-    </VBox>
+    <!-- QUICK ACTIONS CARD HAS BEEN REMOVED -->
 
     <stylesheets>
         <String fx:value="@../Applicationstyle.css"/>

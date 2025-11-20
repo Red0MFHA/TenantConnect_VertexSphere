@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<VBox spacing="15.0" style="-fx-padding: 25; -fx-background-color: white;"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.tenantconnect.UIcontrollers.AddPropertyFormController">
+
+    <!-- Header -->
+    <VBox spacing="5">
+        <Label text="Add New Property" style="-fx-text-fill: #1E3A8A; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+        <Label text="Enter the details of the new property" style="-fx-text-fill: #6B7280; -fx-font-size: 12px;"/>
+    </VBox>
+
+    <Separator style="-fx-opacity: 0.5;"/>
+
+    <!-- Form Fields -->
+    <VBox spacing="8.0">
+        <Label text="Property Name" style="-fx-font-weight: bold; -fx-text-fill: #374151;"/>
+        <TextField fx:id="nameField" promptText="e.g., Sunset Apartments" style="-fx-padding: 8; -fx-border-color: #D1D5DB; -fx-border-radius: 4;"/>
+    </VBox>
+
+    <VBox spacing="8.0">
+        <Label text="Address" style="-fx-font-weight: bold; -fx-text-fill: #374151;"/>
+        <TextField fx:id="addressField" promptText="e.g., 123 Main St" style="-fx-padding: 8; -fx-border-color: #D1D5DB; -fx-border-radius: 4;"/>
+    </VBox>
+
+    <VBox spacing="8.0">
+        <Label text="Number of Units" style="-fx-font-weight: bold; -fx-text-fill: #374151;"/>
+        <TextField fx:id="unitsField" promptText="e.g., 12" style="-fx-padding: 8; -fx-border-color: #D1D5DB; -fx-border-radius: 4;"/>
+    </VBox>
+
+    <VBox spacing="8.0">
+        <Label text="Status" style="-fx-font-weight: bold; -fx-text-fill: #374151;"/>
+        <ComboBox fx:id="statusComboBox" prefWidth="400.0" value="Vacant" style="-fx-padding: 4; -fx-border-color: #D1D5DB; -fx-border-radius: 4; -fx-background-color: white;">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Occupied"/>
+                    <String fx:value="Vacant"/>
+                    <String fx:value="Maintenance"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+    </VBox>
+
+    <!-- Action Button -->
+    <Button text="Add Property" onAction="#submitForm" maxWidth="Infinity"
+            style="-fx-background-color: #F97316; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 10; -fx-background-radius: 6; -fx-margin-top: 10;"/>
+
+</VBox>
