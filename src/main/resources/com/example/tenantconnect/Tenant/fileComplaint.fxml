@@ -16,11 +16,14 @@
 
     <!-- Header Section -->
     <VBox spacing="8">
-        <Label text="File Complaint" styleClass="header-title">
-            <font>
-                <Font name="System Bold" size="32"/>
-            </font>
-        </Label>
+
+        <Label text="File Complaint" style="-fx-font-size: 24; -fx-text-fill: #1E3A8A; -fx-font-weight: bold;"/>
+<!--        <Label text="File Complaint" styleClass="header-title">-->
+<!--            <font>-->
+<!--                <Font name="System Bold" size="32"/>-->
+<!--            </font>-->
+<!--        </Label>-->
+
         <Label text="Submit a complaint or maintenance request" styleClass="header-subtitle">
             <font>
                 <Font size="14"/>
@@ -101,8 +104,8 @@
 
     </VBox>
 
-    <stylesheets>
-        <URL value="@complaint-form.css"/>
-    </stylesheets>
+<!--    <stylesheets>-->
+<!--        <URL value="@complaint-form.css"/>-->
+<!--    </stylesheets>-->
 
 </VBox>

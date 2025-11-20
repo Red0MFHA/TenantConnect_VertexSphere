@@ -15,11 +15,8 @@
 
     <!-- Header Section -->
     <VBox spacing="8">
-        <Label text="Pay Rent">
-            <font>
-                <Font name="System Bold" size="32"/>
-            </font>
-        </Label>
+        <Label text="Pay Rent" style="-fx-font-size: 24; -fx-text-fill: #1E3A8A; -fx-font-weight: bold;"/>
+
         <Label text="Submit your rent payment">
             <font>
                 <Font size="14"/>

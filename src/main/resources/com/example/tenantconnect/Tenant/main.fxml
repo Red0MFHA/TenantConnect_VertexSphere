@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.tenantconnect.UIcontrollers.TenantController">
+
+    <top>
+        <fx:include source="topBar.fxml" />
+    </top>
+
+    <!-- THIS IS THE MAGIC LINE -->
+    <left>
+        <fx:include source="sidebar.fxml" fx:id="sidebar" />
+    </left>
+
+    <center>
+        <VBox fx:id="contentArea" />
+    </center>
+
+</BorderPane>

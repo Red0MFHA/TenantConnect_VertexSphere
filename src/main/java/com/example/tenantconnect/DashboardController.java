@@ -18,7 +18,7 @@ public class DashboardController {
     @FXML
     public void initialize() {
         try {
-            screen1 = FXMLLoader.load(getClass().getResource("/com/example/app/screens/FileComplaint.fxml"));
+            screen1 = FXMLLoader.load(getClass().getResource("/com/example/app/screens/fileComplaint.fxml"));
             screen2 = FXMLLoader.load(getClass().getResource("/com/example/app/screens/Screen2.fxml"));
 
             // Show screen1 by default

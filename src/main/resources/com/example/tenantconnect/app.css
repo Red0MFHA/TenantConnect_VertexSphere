@@ -1,0 +1,235 @@
+/* ==================================================
+   TenantConnect – Official Theme (2025)
+   Exact match to your Tailwind React design
+   ================================================== */
+
+.root {
+    -fx-font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+    -fx-background-color: #FFFFFF;
+}
+
+/* ===================================
+   Sidebar
+   =================================== */
+#sidebar {
+    -fx-background-color: #1E3A8A;
+    -fx-border-color: #2563EB;
+    -fx-border-width: 0 1 0 0;
+}
+
+.sidebar-header {
+    -fx-padding: 24;
+    -fx-border-color: #2563EB;
+    -fx-border-width: 0 0 1 0;
+}
+
+.sidebar-footer {
+    -fx-padding: 16;
+    -fx-border-color: #2563EB;
+    -fx-border-width: 1 0 0 0;
+}
+
+#sidebar .button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #E0F2FE;
+    -fx-font-size: 14.5px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-pref-width: 256;
+    -fx-padding: 12 16;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+#sidebar .button:hover {
+    -fx-background-color: #2563EB;
+    -fx-text-fill: white;
+}
+
+/* Active menu item (exactly like your React version) */
+#sidebar .button.active-menu-btn,
+.sidebar-button-active {
+    -fx-background-color: -fx-background;
+    -fx-background-color: #F97316 !important;
+    -fx-text-fill: white !important;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0.5, 0, 0);
+}
+
+/* ===================================
+   TopBar
+   =================================== */
+.topbar-container {
+    -fx-background-color: white;
+    -fx-border-color: #E5E7EB;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 0 32;
+    -fx-pref-height: 64;
+    -fx-min-height: 64;
+}
+
+.notification-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 50;
+    -fx-padding: 8;
+    -fx-cursor: hand;
+}
+
+.notification-button:hover {
+    -fx-background-color: #F3F4F6;
+}
+
+.notification-badge {
+    -fx-background-color: #F97316;
+    -fx-text-fill: white;
+    -fx-font-size: 10;
+    -fx-padding: 2 6;
+    -fx-background-radius: 12;
+    -fx-translate-x: 6;
+    -fx-translate-y: -6;
+}
+
+.profile-badge {
+    -fx-background-color: #E0F2FE;
+    -fx-padding: 8 12;
+    -fx-background-radius: 8;
+}
+
+/* ===================================
+   Cards & Forms (UniversalForm style)
+   =================================== */
+.universal-card {
+    -fx-background-color: white;
+    -fx-border-color: #E0F2FE;
+    -fx-border-width: 2;
+    -fx-background-radius: 8;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 10, 0, 0, 4);
+}
+
+.card-header {
+    -fx-background-color: #E0F2FE;
+    -fx-padding: 24;
+    -fx-background-radius: 6 6 0 0;
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1E3A8A;
+}
+
+/* ===================================
+   Form Inputs
+   =================================== */
+.text-field, .password-field, .text-area, .combo-box, .combo-box-base {
+    -fx-background-color: #F8FAFC;
+    -fx-border-color: #D1D5DB;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-padding: 10 12;
+    -fx-font-size: 14;
+}
+
+.text-field:focused, .password-field:focused, .text-area:focused, .combo-box:focused {
+    -fx-border-color: #2563EB;
+    -fx-border-width: 2;
+    -fx-background-color: white;
+}
+
+/* ===================================
+   Buttons
+   =================================== */
+
+/* Primary Orange Button */
+.button-primary, .btn-primary {
+    -fx-background-color: #F97316;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+}
+.button-primary:hover, .btn-primary:hover {
+    -fx-background-color: #EA580C;
+}
+
+/* Outline Blue Button */
+.button-outline, .btn-outline {
+    -fx-background-color: white;
+    -fx-text-fill: #1E3A8A;
+    -fx-font-weight: bold;
+    -fx-border-color: #E0F2FE;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+}
+.button-outline:hover, .btn-outline:hover {
+    -fx-background-color: #F0F9FF;
+}
+
+/* Success & Danger (for Accept/Reject) */
+.btn-success {
+    -fx-background-color: #10B981;
+    -fx-text-fill: white;
+}
+.btn-success:hover { -fx-background-color: #059669; }
+
+.btn-danger {
+    -fx-background-color: #EF4444;
+    -fx-text-fill: white;
+}
+.btn-danger:hover { -fx-background-color: #DC2626; }
+
+/* ===================================
+   Typography Helpers
+   =================================== */
+.text-large   { -fx-font-size: 18; -fx-font-weight: bold; }
+.text-muted   { -fx-text-fill: #6B7280; }
+.text-orange  { -fx-text-fill: #F97316; }
+.text-blue    { -fx-text-fill: #1E3A8A; }
+.text-red { -fx-text-fill: #DC2626; }
+.text-green { -fx-text-fill: #10B981; }
+
+
+
+/* Table Styling – clean & modern */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #F8FAFC;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-font-weight: bold;
+    -fx-text-fill: #475569;
+    -fx-padding: 12;
+    -fx-border-color: transparent transparent #E2E8F0 transparent;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-padding: 12 0;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #FAFAFA;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #F0F9FF;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #DBEAFE;
+    -fx-text-fill: #1E3A8A;
+}
+
+/* Status cell colors (you can style in code too) */
+.status-paid { -fx-text-fill: #10B981; -fx-font-weight: bold; }
+.status-pending { -fx-text-fill: #F59E0B; -fx-font-weight: bold; }
+.status-overdue { -fx-text-fill: #EF4444; -fx-font-weight: bold; }
