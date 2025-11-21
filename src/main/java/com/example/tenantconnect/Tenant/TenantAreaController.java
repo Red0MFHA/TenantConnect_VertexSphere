@@ -21,7 +21,7 @@ public class TenantAreaController {
         loadPage("Dashboard.fxml"); // default page
 
         dashboardBtn.setOnAction(e -> loadPage("Dashboard.fxml"));
-        fileComplaintBtn.setOnAction(e -> loadPage("FileComplaint.fxml"));
+        fileComplaintBtn.setOnAction(e -> loadPage("fileComplaint.fxml"));
         payRentBtn.setOnAction(e -> loadPage("PayRent.fxml"));
     }
 

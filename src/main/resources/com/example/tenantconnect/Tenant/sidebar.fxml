@@ -4,30 +4,36 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-      spacing="20" prefWidth="250">
+<VBox fx:id="sidebar" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      spacing="0" prefWidth="256" styleClass="sidebar-container">
 
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
-
-    <Label text="TenantConnect"/>
-
-    <Separator/>
-
-    <VBox spacing="10">
-        <Label text="MAIN MENU"/>
-
-        <Button text="Dashboard" fx:id="dashboardBtn" maxWidth="Infinity"/>
-        <Button text="File Complaint" fx:id="fileComplaintBtn" maxWidth="Infinity"/>
-        <Button text="Pay Rent" fx:id="payRentBtn" maxWidth="Infinity"/>
+    <!-- Header -->
+    <VBox styleClass="sidebar-header">
+        <Label text="TenantConnect"
+               style="-fx-font-size: 26px; -fx-font-weight: 800; -fx-text-fill: white;"/>
     </VBox>
 
-    <VBox spacing="10" VBox.vgrow="ALWAYS">
-        <Label text="ACCOUNT"/>
-        <Button text="Profile" fx:id="profileBtn" maxWidth="Infinity"/>
-        <Button text="Settings" fx:id="settingsBtn" maxWidth="Infinity"/>
-        <Button text="Logout" fx:id="logoutBtn" maxWidth="Infinity"/>
+    <!-- Main Menu -->
+    <VBox spacing="4" style="-fx-padding: 16 8 16 8;">
+        <Label text="MAIN MENU"
+               style="-fx-text-fill: #94A3B8; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 8 16;"/>
+
+        <Button text="Dashboard"           fx:id="dashboardBtn"          styleClass="sidebar-button" maxWidth="Infinity"/>
+        <Button text="File Complaint"      fx:id="fileComplaintBtn"      styleClass="sidebar-button" maxWidth="Infinity"/>
+        <Button text="Pay Rent"            fx:id="payRentBtn"            styleClass="sidebar-button" maxWidth="Infinity"/>
+        <Button text="Property Assignment" fx:id="propertyAssignmentBtn" styleClass="sidebar-button" maxWidth="Infinity"/>
+        <Button text="Rent History"        fx:id="rentHistoryBtn"        styleClass="sidebar-button" maxWidth="Infinity"/>
+        <Button text="Rent Status"         fx:id="rentStatusBtn"         styleClass="sidebar-button" maxWidth="Infinity"/>
+        <Button text="Request Extension"   fx:id="requestExtensionBtn"   styleClass="sidebar-button" maxWidth="Infinity"/>
     </VBox>
 
+    <!-- Push everything to top -->
+    <Region VBox.vgrow="ALWAYS"/>
+
+    <!-- Optional footer (if you ever want logout back) -->
+    <!--
+    <VBox styleClass="sidebar-footer">
+        <Button text="Logout" fx:id="logoutBtn" styleClass="sidebar-logout-button"/>
+    </VBox>
+    -->
 </VBox>

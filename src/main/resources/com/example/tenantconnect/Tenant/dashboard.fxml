@@ -1,46 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      spacing="20"
-      prefWidth="800"
-      prefHeight="600"
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="40"
       alignment="TOP_LEFT">
 
     <padding>
-        <Insets top="20" left="20" right="20" bottom="20"/>
+        <Insets top="40" left="48" right="48" bottom="40"/>
     </padding>
 
-    <!-- Top welcome message -->
-    <VBox spacing="5">
-        <Label text="Welcome back, Tenant" style="-fx-font-size: 18;"/>
-        <Label text="Wednesday, November 12, 2025"/>
+    <!-- Header -->
+    <VBox spacing="8">
+        <Label text="Dashboard" style="-fx-font-size: 24; -fx-text-fill: #1E3A8A; -fx-font-weight: bold;"/>
+<!--        <Label text="Dashboard" styleClass="heading-1"/>-->
+        <Label text="Overview of your rental information" styleClass="text-muted"/>
     </VBox>
 
-    <!-- Quick action buttons (like React dashboard) -->
-    <GridPane hgap="10" vgap="10">
-        <Button text="Dashboard" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <Button text="Pay Rent" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-        <Button text="Rent Status" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-        <Button text="Rent History" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <Button text="File Complaint" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-        <Button text="Request Extension" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
-        <Button text="Property Assignment" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-    </GridPane>
+    <!-- Stats Grid (4 Cards) -->
+    <HBox spacing="24">
 
-    <!-- Dashboard summary (quick info like React cards) -->
-    <VBox spacing="10">
-        <Label text="Dashboard Summary:" style="-fx-font-size: 16;"/>
-        <Label text="• Upcoming Rent Due: $500"/>
-        <Label text="• Last Complaint Status: Pending"/>
-        <Label text="• Current Property: Apartment 12B"/>
+        <!-- Card 1: Rent Status -->
+        <VBox styleClass="universal-card" spacing="16" prefWidth="280">
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <Label text="💰" style="-fx-font-size: 36px;"/>
+                <VBox spacing="4">
+                    <Label text="Current Rent Status" styleClass="text-muted"/>
+                    <Label text="Paid" styleClass="heading-3 text-green"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Card 2: Next Due Date -->
+        <VBox styleClass="universal-card" spacing="16" prefWidth="280">
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <Label text="📅" style="-fx-font-size: 36px;"/>
+                <VBox spacing="4">
+                    <Label text="Next Due Date" styleClass="text-muted"/>
+                    <Label text="Dec 15, 2025" styleClass="heading-3 text-blue"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Card 3: Open Complaints -->
+        <VBox styleClass="universal-card" spacing="16" prefWidth="280">
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <Label text="⚠️" style="-fx-font-size: 36px;"/>
+                <VBox spacing="4">
+                    <Label text="Open Complaints" styleClass="text-muted"/>
+                    <Label text="2" styleClass="heading-3 text-orange"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Card 4: My Property -->
+        <VBox styleClass="universal-card" spacing="16" prefWidth="280">
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <Label text="🏠" style="-fx-font-size: 36px;"/>
+                <VBox spacing="4">
+                    <Label text="My Property" styleClass="text-muted"/>
+                    <Label text="Sunset Apt 101" styleClass="heading-3 text-blue"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </HBox>
+
+    <!-- Recent Activity -->
+    <VBox styleClass="universal-card" spacing="20">
+        <VBox styleClass="card-header">
+            <Label text="Recent Activity" styleClass="heading-3 text-blue"/>
+        </VBox>
+        <VBox spacing="16" style="-fx-padding: 0 24 24 24;">
+            <HBox spacing="20" alignment="BASELINE_LEFT">
+                <Label text="•" style="-fx-text-fill: #10B981;"/>
+                <VBox spacing="4">
+                    <Label text="Rent paid for November" styleClass="text-blue"/>
+                    <Label text="2025-11-01" styleClass="text-muted"/>
+                </VBox>
+            </HBox>
+            <HBox spacing="20" alignment="BASELINE_LEFT">
+                <Label text="•" style="-fx-text-fill: #F59E0B;"/>
+                <VBox spacing="4">
+                    <Label text="Complaint filed - Leaky faucet" styleClass="text-blue"/>
+                    <Label text="2025-10-28" styleClass="text-muted"/>
+                </VBox>
+            </HBox>
+            <HBox spacing="20" alignment="BASELINE_LEFT">
+                <Label text="•" style="-fx-text-fill: #10B981;"/>
+                <VBox spacing="4">
+                    <Label text="Extension request approved" styleClass="text-blue"/>
+                    <Label text="2025-10-15" styleClass="text-muted"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </VBox>
+
+    <!-- Quick Actions -->
+    <VBox styleClass="universal-card" spacing="20">
+        <VBox styleClass="card-header">
+            <Label text="Quick Actions" styleClass="heading-3 text-blue"/>
+        </VBox>
+        <HBox spacing="24" alignment="CENTER_LEFT" style="-fx-padding: 0 24 24 24;">
+            <Button text="Pay Rent Now" styleClass="btn-primary" prefWidth="220" prefHeight="72"/>
+            <Button text="File Complaint" styleClass="btn-outline" prefWidth="220" prefHeight="72"/>
+            <Button text="Request Extension" styleClass="btn-outline" prefWidth="220" prefHeight="72"/>
+        </HBox>
     </VBox>
 
 </VBox>
