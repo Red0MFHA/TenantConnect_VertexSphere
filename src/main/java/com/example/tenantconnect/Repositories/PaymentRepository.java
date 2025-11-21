@@ -51,6 +51,64 @@ public class PaymentRepository {
                 "WHERE payment_id = " + p.getPayment_id() + ";";
         dbHandler.executeQuery(sql);
     }
+    public boolean markPaymentAsPaid(int tenantId, int paymentId) {
+        String sql = """
+        UPDATE payments 
+        SET payment_status = 'paid', 
+            paid_date = DATE('now'),
+            amount_paid = amount_due
+        WHERE payment_id = %d
+          AND contract_id IN (
+                SELECT contract_id 
+                FROM contracts 
+                WHERE tenant_id = %d
+          );
+        """.formatted(paymentId, tenantId);
+
+        try {
+            dbHandler.executeQuery(sql);
+
+            // Check if actually updated
+            String checkSql = "SELECT payment_status FROM payments WHERE payment_id = " + paymentId;
+            ResultSet rs = dbHandler.executeSelect(checkSql);
+
+            if (rs != null && rs.next()) {
+                boolean success = rs.getString("payment_status").equals("paid");
+                rs.close();
+                return success;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public int getOwnerIdByPaymentId(int paymentId) {
+        int ownerId = -1;
+
+        try {
+            String sql = """
+            SELECT p.owner_id
+            FROM payments pay
+            JOIN contracts c ON pay.contract_id = c.contract_id
+            JOIN properties p ON c.property_id = p.property_id
+            WHERE pay.payment_id = %d
+            """.formatted(paymentId);
+
+            ResultSet rs = dbHandler.executeSelect(sql);
+
+            if (rs != null && rs.next()) {
+                ownerId = rs.getInt("owner_id");
+            }
+
+            if (rs != null) rs.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ownerId; // returns -1 if not found
+    }
 
     // Delete payment
     public void deletePayment(int paymentId) {
@@ -118,7 +176,15 @@ public class PaymentRepository {
                 "WHERE extension_id = " + extensionId + ";";
         dbHandler.executeQuery(sql);
     }
-
+    //update when the extension request is updates
+    public void updateExtensionRequest(PaymentExtension pr){
+        //updating Status
+        String sql = "UPDATE payment_extensions SET status = '"+ pr.getStatus() +"' WHERE extension_id = "+ pr.getExtension_id() + ";";
+        dbHandler.executeQuery(sql);
+        //updating duedate
+        String sql1 = "UPDATE payments SET due_date = '"+pr.getCurrent_due_date()  +"' where payment_id = "+ pr.getPayment_id() + ";" ;
+        dbHandler.executeQuery(sql1);
+    }
     // Delete extension
     public void deletePaymentExtension(int extensionId) {
         String sql = "DELETE FROM payment_extensions WHERE extension_id = " + extensionId + ";";
@@ -190,6 +256,44 @@ public class PaymentRepository {
         }
         return payments;
     }
+
+
+    // Retrieve all history payments for a specific tenant (amount_due > amount_paid or status pending/overdue)
+    public List<Payment> getHistoryPaymentsByTenant(int tenantId) {
+        List<Payment> payments = new ArrayList<>();
+        String sql = "SELECT p.* FROM payments p " +
+                "JOIN contracts c ON p.contract_id = c.contract_id " +
+                "WHERE c.tenant_id = " + tenantId +
+                ";";
+        try (ResultSet rs = dbHandler.executeSelect(sql)) {
+            while (rs != null && rs.next()) {
+                payments.add(mapResultSetToPayment(rs));
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return payments;
+    }
+
+    // Retrieve all due payments for properties of a specific owner
+    public List<Payment> getHistoryPaymentsByOwner(int ownerId) {
+        List<Payment> payments = new ArrayList<>();
+        String sql = "SELECT p.* FROM payments p " +
+                "JOIN contracts c ON p.contract_id = c.contract_id " +
+                "JOIN properties pr ON c.property_id = pr.property_id " +
+                "WHERE pr.owner_id = " + ownerId +
+                ";";
+        try (ResultSet rs = dbHandler.executeSelect(sql)) {
+            while (rs != null && rs.next()) {
+                payments.add(mapResultSetToPayment(rs));
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return payments;
+    }
     // Retrieve unresolved payment extensions for a specific tenant
     public List<PaymentExtension> getUnresolvedExtensionsByTenant(int tenantId) {
         List<PaymentExtension> extensions = new ArrayList<>();
@@ -226,5 +330,21 @@ public class PaymentRepository {
         }
         return extensions;
     }
+    public PaymentExtension getPaymentExtensionByExtensionID(int extensionID) {
+        String sql = "SELECT * FROM payment_extensions " +
+                "WHERE extension_id = " + extensionID + " LIMIT 1;";
 
+        try (ResultSet rs = dbHandler.executeSelect(sql)) {
+            if (rs != null && rs.next()) {
+                PaymentExtension extension = mapResultSetToExtension(rs);
+                rs.close();
+                return extension;   // Return single object
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;  // Return null if not found
+    }
 }

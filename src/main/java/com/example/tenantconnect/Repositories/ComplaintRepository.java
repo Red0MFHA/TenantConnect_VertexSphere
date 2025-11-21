@@ -54,6 +54,11 @@ public class ComplaintRepository {
         dbHandler.executeQuery(sql);
     }
 
+    public boolean updateStatus(int complaintId, String newStatus){
+        String sql = "UPDATE complaints SET  status = '" + newStatus + "' WHERE complaint_id = " + complaintId + ";";
+        return dbHandler.executeQuery(sql);
+    }
+
     public void deleteComplaint(int complaintId) {
         String sql = "DELETE FROM complaints WHERE complaint_id = " + complaintId + ";";
         dbHandler.executeQuery(sql);

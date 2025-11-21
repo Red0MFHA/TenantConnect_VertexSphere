@@ -146,4 +146,38 @@ public class UserRepository {
         }
         return users;
     }
+    public boolean isTenant(int userId) {
+        String sql = "SELECT user_type FROM users WHERE user_id=" + userId + " LIMIT 1";
+        ResultSet rs = dbHandler.executeSelect(sql);
+
+        try {
+            if (rs != null && rs.next()) {
+                String type = rs.getString("user_type");
+                rs.close();
+                return type.equalsIgnoreCase("tenant");
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isOwner(int userId) {
+        String sql = "SELECT user_type FROM users WHERE user_id=" + userId + " LIMIT 1;";
+        ResultSet rs = dbHandler.executeSelect(sql);
+
+        try {
+            if (rs != null && rs.next()) {
+                String type = rs.getString("user_type");
+                rs.close();
+                return type.equalsIgnoreCase("owner");
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

@@ -14,4 +14,7 @@ public class TenantService {
     public boolean validateTenantKey(String email){
         return userRepository.getUserByEmail(email) != -1;
     }
+    public boolean isTenant(int tenant_id){
+        return userRepository.isTenant(tenant_id);
+    }
 }

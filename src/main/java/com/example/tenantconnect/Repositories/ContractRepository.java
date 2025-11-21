@@ -148,6 +148,9 @@ public class ContractRepository {
 
     //  Delete contract by contract_id
     public boolean deleteContract(int contractId) {
+        Contract contract = this.getContractById(contractId);
+        if(contract == null) return false;
+        if(contract.getContract_status().equals("active")) return false;
         String sql = "DELETE FROM contracts WHERE contract_id = " + contractId;
         return dbHandler.executeQuery(sql);
     }
@@ -193,7 +196,21 @@ public class ContractRepository {
         }
         return contracts;
     }
+    public List<Contract> getPendingContractsByTenant(int tenantId) {
+        List<Contract> contracts = new ArrayList<>();
+        String sql = "SELECT * FROM contracts WHERE tenant_id = " + tenantId+"AND contract_status = "+"pending";
+        ResultSet rs = dbHandler.executeSelect(sql);
 
+        try {
+            while (rs != null && rs.next()) {
+                contracts.add(mapToContract(rs));
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contracts;
+    }
 
     //  Get all contracts for a specific property
     public List<Contract> getContractsByProperty(int propertyId) {
@@ -251,6 +268,50 @@ public class ContractRepository {
         String sql = "UPDATE contracts SET contract_status = '" + newStatus + "' WHERE contract_id = " + contractId;
         return dbHandler.executeQuery(sql);
     }
+    public boolean updateContract(Contract contract) {
+        if (contract == null) {
+            System.out.println("Contract object is null!");
+            return false;
+        }
+
+        int contractId = contract.getContract_id();
+
+        // Safety: Check if contract exists
+        String checkSQL = "SELECT contract_id FROM contracts WHERE contract_id = " + contractId;
+        ResultSet rs = dbHandler.executeSelect(checkSQL);
+
+        try {
+            if (rs == null || !rs.next()) {
+                System.out.println("Contract not found with ID: " + contractId);
+                return false;
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        // Build SQL update query
+        String sql = "UPDATE contracts SET " +
+                "property_id = " + contract.getProperty_id() + ", " +
+                "tenant_id = " + contract.getTenant_id() + ", " +
+                "start_date = '" + contract.getStart_date() + "', " +
+                "end_date = '" + contract.getEnd_date() + "', " +
+                "monthly_rent = " + contract.getMonthly_rent() + ", " +
+                "security_deposit = " + contract.getSecurity_deposit() + ", " +
+                "contract_status = '" + contract.getContract_status() + "' " +
+                "WHERE contract_id = " + contractId;
+
+        boolean success = dbHandler.executeQuery(sql);
+
+        if (success) {
+            System.out.println("Contract updated successfully!");
+        } else {
+            System.out.println("Failed to update contract!");
+        }
+
+        return success;
+    }
 
     //  Get all active contracts
     public List<Contract> getActiveContracts() {
@@ -268,7 +329,31 @@ public class ContractRepository {
         }
         return contracts;
     }
+    public int getOwnerIdByContractId(int contractId) {
+        int ownerId = -1;
 
+        try {
+            String sql = """
+            SELECT p.owner_id 
+            FROM contracts c
+            JOIN properties p ON c.property_id = p.property_id
+            WHERE c.contract_id = %d
+            """.formatted(contractId);
+
+            ResultSet rs = dbHandler.executeSelect(sql);
+
+            if (rs != null && rs.next()) {
+                ownerId = rs.getInt("owner_id");
+            }
+
+            if (rs != null) rs.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ownerId; // returns -1 if not found
+    }
 
     // Optional utility: Get all contracts (for admin/debug)
     public List<Contract> getAllContracts() {
@@ -326,6 +411,23 @@ public class ContractRepository {
 
         return list;
     }
+
+    public List<Contract> getContractByOwner(int owner_id){
+        List<Contract> contracts = new ArrayList<>();
+        String sql = "SELECT * FROM contracts c join properties p on c.property_id=p.property_id WHERE p.owner_id = " + owner_id+";";
+        ResultSet rs = dbHandler.executeSelect(sql);
+
+        try {
+            while (rs != null && rs.next()) {
+                contracts.add(mapToContract(rs));
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contracts;
+    }
+
     public List<PropertyAssignment> getAssignmentsByTenantId(int tenantId) {
         List<PropertyAssignment> list = new ArrayList<>();
 
