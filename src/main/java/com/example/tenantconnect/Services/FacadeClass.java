@@ -16,6 +16,8 @@ public class FacadeClass {
     PropertyService propertyService;
     TenantService tenantService;
 
+    public static int CURRENT_USER_ID;
+
     public static FacadeClass instance;
     private FacadeClass(){
         notificationService = new NotificationService();

@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import java.io.IOException;
 
-
+import com.example.tenantconnect.Services.FacadeClass;
 import com.example.tenantconnect.Repositories.UserRepository;
 
 
@@ -58,6 +58,7 @@ public class AuthController {
         int userId = userRepo.login(email, password);
         if (userId != -1) {
             showAlert("Success", "Login successful! User ID: " + userId);
+            FacadeClass.CURRENT_USER_ID = userId;
             if(userRepo.isOwner(userId)){
                 changeScene(event, "/com/example/tenantconnect/Applayout.fxml");
             }
@@ -104,6 +105,7 @@ public class AuthController {
         if (success) {
             showAlert("Success", "Signup successful! You can now login.");
             int userId = userRepo.login(email, password);
+            FacadeClass.CURRENT_USER_ID = userId;
             if(userRepo.isOwner(userId)){
                 changeScene(event, "/com/example/tenantconnect/Applayout.fxml");
             }
