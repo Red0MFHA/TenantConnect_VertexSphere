@@ -144,6 +144,97 @@ public class ContractRepository {
             return false;
         }
     }
+    //add assignment
+    public boolean createAssignment(int ownerId, int propertyId, int tenantId, int contractId) {
+
+        try {
+            // -----------------------------
+            // 1. Check Owner Exists
+            // -----------------------------
+            String ownerSQL = "SELECT * FROM users WHERE user_id = " + ownerId;
+            ResultSet rsOwner = dbHandler.executeSelect(ownerSQL);
+            if (rsOwner == null || !rsOwner.next()) {
+                System.out.println("Owner not found!");
+                return false;
+            }
+            rsOwner.close();
+
+            // -----------------------------
+            // 2. Check Property Exists
+            // -----------------------------
+            String propSQL = "SELECT * FROM properties WHERE property_id = " + propertyId;
+            ResultSet rsProp = dbHandler.executeSelect(propSQL);
+            if (rsProp == null || !rsProp.next()) {
+                System.out.println("Property not found!");
+                return false;
+            }
+
+            String propertyName = rsProp.getString("property_name");
+            rsProp.close();
+
+            // -----------------------------
+            // 3. Check Tenant Exists
+            // -----------------------------
+            String tenantSQL = "SELECT * FROM users WHERE user_id = " + tenantId;
+            ResultSet rsTenant = dbHandler.executeSelect(tenantSQL);
+            if (rsTenant == null || !rsTenant.next()) {
+                System.out.println("Tenant not found!");
+                return false;
+            }
+            rsTenant.close();
+
+            // -----------------------------
+            // 4. Check Contract Exists
+            // -----------------------------
+            String contractSQL = "SELECT * FROM contracts WHERE contract_id = " + contractId;
+            ResultSet rsContract = dbHandler.executeSelect(contractSQL);
+            if (rsContract == null || !rsContract.next()) {
+                System.out.println("Contract not found!");
+                return false;
+            }
+            rsContract.close();
+
+            // -----------------------------
+            // 5. Check Duplicate Assignment
+            // -----------------------------
+            String checkSQL =
+                    "SELECT * FROM property_assignments WHERE owner_id = " + ownerId +
+                            " AND property_id = " + propertyId +
+                            " AND tenant_id = " + tenantId +
+                            " AND contract_id = " + contractId;
+
+            ResultSet rsCheck = dbHandler.executeSelect(checkSQL);
+
+            if (rsCheck != null && rsCheck.next()) {
+                System.out.println("Assignment already exists! (Duplicate)");
+                rsCheck.close();
+                return false;
+            }
+            rsCheck.close();
+
+            // -----------------------------
+            // 6. Insert into property_assignments
+            // -----------------------------
+            String insertSQL =
+                    "INSERT INTO property_assignments (owner_id, property_id, property_name, tenant_id, contract_id) " +
+                            "VALUES (" + ownerId + ", " + propertyId + ", '" + propertyName + "', " +
+                            tenantId + ", " + contractId + ")";
+
+            boolean inserted = dbHandler.executeQuery(insertSQL);
+
+            if (!inserted) {
+                System.out.println("Failed to insert property assignment!");
+                return false;
+            }
+
+            System.out.println("Assignment created successfully!");
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 
     //  Delete contract by contract_id

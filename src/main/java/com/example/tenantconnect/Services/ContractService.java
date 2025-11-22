@@ -37,6 +37,9 @@ public class ContractService {
         }
         return -1;
     }
+    public boolean createAssignment(int owner_id,int property_id,int tenant_id,int contract_id){
+        return contractRepository.createAssignment(owner_id,property_id,tenant_id,contract_id);
+    }
     public List<Contract> getContractsByOwner(int owner_id){
         return contractRepository.getContractByOwner(owner_id);
     }

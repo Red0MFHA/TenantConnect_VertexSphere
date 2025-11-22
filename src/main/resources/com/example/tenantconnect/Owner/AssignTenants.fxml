@@ -12,7 +12,7 @@
 <?import java.lang.String?>
 
 <VBox spacing="24.0" styleClass="page-container" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.tenantconnect.controllers.OwnerController">
+      fx:controller="com.example.tenantconnect.UIcontrollers.AssignTenantController">
     <VBox spacing="8.0">
         <Label text="Assign Tenants" style="-fx-text-fill: #1E3A8A; -fx-font-size: 24px; -fx-font-weight: bold;"/>
         <Label text="Send property invitations to tenants" style="-fx-text-fill: #6B7280;"/>
@@ -47,7 +47,11 @@
                     <Label text="Tenant Email" styleClass="form-label"/>
                     <TextField fx:id="tenantEmailField" promptText="Enter tenant's email address"/>
                 </VBox>
+                <VBox spacing="4.0">
+                    <Label text="Contract ID" />
+                    <TextField fx:id="contractIdField" promptText="Enter Contract ID manually" />
 
+                </VBox>
                 <Button text="Send Invitation"  prefWidth="1.7976931348623157E308"
                         style="-fx-background-color: #F97316; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 0;"/>
             </VBox>
