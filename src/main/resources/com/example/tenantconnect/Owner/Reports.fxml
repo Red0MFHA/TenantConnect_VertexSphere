@@ -40,12 +40,7 @@
             </VBox>
 
             <!-- Export Buttons -->
-            <Button  style="-fx-background-color: #F97316; -fx-text-fill: white;" styleClass="button-primary">
-                <Label text="Export PDF" style="-fx-text-fill: white;"/>
-            </Button>
-            <Button  styleClass="button-outline">
-                <Label text="Export Excel" style="-fx-text-fill: #1E3A8A;"/>
-            </Button>
+
         </HBox>
     </VBox>
 
