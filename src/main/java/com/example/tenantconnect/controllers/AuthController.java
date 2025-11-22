@@ -58,7 +58,12 @@ public class AuthController {
         int userId = userRepo.login(email, password);
         if (userId != -1) {
             showAlert("Success", "Login successful! User ID: " + userId);
-            changeScene(event, "/com/example/tenantconnect/views/Dashboard.fxml");
+            if(userRepo.isOwner(userId)){
+                changeScene(event, "/com/example/tenantconnect/Applayout.fxml");
+            }
+            else{
+                changeScene(event, "/com/example/tenantconnect/Tenant/main.fxml");
+            }
         } else {
             showAlert("Invalid", "Email or Password is incorrect");
         }
@@ -98,7 +103,13 @@ public class AuthController {
         boolean success = userRepo.addUser(email, password, fullName, role);
         if (success) {
             showAlert("Success", "Signup successful! You can now login.");
-            changeScene(event, "/com/example/tenantconnect/views/Login.fxml");
+            int userId = userRepo.login(email, password);
+            if(userRepo.isOwner(userId)){
+                changeScene(event, "/com/example/tenantconnect/Applayout.fxml");
+            }
+            else{
+                changeScene(event, "/com/example/tenantconnect/Tenant/main.fxml");
+            }
         } else {
             showAlert("Error", "Signup failed! Email might already exist.");
         }

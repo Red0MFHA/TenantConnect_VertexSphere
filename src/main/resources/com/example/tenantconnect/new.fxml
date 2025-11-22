@@ -72,20 +72,32 @@
                                 <Label text="Confirm Password"/>
                                 <PasswordField fx:id="signupConfirm" promptText="Confirm your password"/>
 
-                                <Label text="Role"/>
-                                <ComboBox fx:id="signupRole">
-                                    <items>
-<!--                                        <FXCollections fx:factory="observableArrayList">-->
-<!--                                            <String fx:value="Owner"/>-->
-<!--                                            <String fx:value="Tenant"/>-->
-<!--                                        </FXCollections>-->
-                                    </items>
-                                </ComboBox>
+<!--                                <Label text="Role"/>-->
+<!--                                <ComboBox fx:id="signupRole">-->
+<!--                                    <items>-->
+<!--&lt;!&ndash;                                        <FXCollections fx:factory="observableArrayList">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <String fx:value="Owner"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <String fx:value="Tenant"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </FXCollections>&ndash;&gt;-->
+<!--                                    </items>-->
+<!--                                </ComboBox>-->
 
-                                <Button text="Create Account"
-                                        onAction="#onSignup"
-                                        style="-fx-background-color: #F97316; -fx-text-fill: white; -fx-pref-width: 100%;"/>
+<!--                                <Button text="Create Account"-->
+<!--                                        onAction="#onSignup"-->
+<!--                                        style="-fx-background-color: #F97316; -fx-text-fill: white; -fx-pref-width: 100%;"/>-->
+                                <!-- HBox for Role + Signup Button -->
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <ComboBox fx:id="signupRole" prefWidth="180">
+                                        <items>
+                                            <!-- Add your roles here -->
+                                        </items>
+                                    </ComboBox>
 
+                                    <Button text="Create Account"
+                                            onAction="#onSignup"
+                                            style="-fx-background-color: #F97316; -fx-text-fill: white;"
+                                            prefWidth="180"/>
+                                </HBox>
                             </VBox>
                         </Tab>
                     </tabs>
