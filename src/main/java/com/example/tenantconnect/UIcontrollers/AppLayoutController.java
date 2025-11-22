@@ -70,6 +70,8 @@ public class AppLayoutController {
                 fxmlPath = "/com/example/tenantconnect/Owner/Complaints.fxml";
                 break;
             case "reports":
+                fxmlPath = "/com/example/tenantconnect/Owner/Reports.fxml";
+                break;
             case "extensions":
                 fxmlPath = "/com/example/tenantconnect/Owner/Extensions.fxml";
                 break;
