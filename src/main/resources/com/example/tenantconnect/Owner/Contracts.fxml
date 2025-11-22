@@ -5,32 +5,48 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.VBox?>
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox spacing="24.0" styleClass="contracts-view" xmlns:fx="http://javafx.com/fxml"
-     >
 
-    <!-- Header Section (space-y-6) -->
+<VBox spacing="16.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.tenantconnect.UIcontrollers.ContractsController"
+      styleClass="contracts-view">
+
+    <padding>
+        <Insets top="16" right="16" bottom="16" left="16"/>
+    </padding>
+
+    <!-- Header -->
     <VBox spacing="8.0">
         <Label text="Contracts" style="-fx-text-fill: #1E3A8A; -fx-font-size: 24px; -fx-font-weight: bold;"/>
         <Label text="Manage tenant lease agreements" style="-fx-text-fill: #6B7280;"/>
     </VBox>
 
-    <!-- Table Section (Replaces UniversalTable) -->
+    <!-- Table -->
     <TableView fx:id="contractsTable" VBox.vgrow="ALWAYS" styleClass="universal-table">
         <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
         </columnResizePolicy>
 
         <columns>
-            <TableColumn fx:id="tenantColumn" text="Tenant" prefWidth="120.0"/>
-            <TableColumn fx:id="propertyColumn" text="Property" prefWidth="180.0"/>
-            <TableColumn fx:id="startDateColumn" text="Start Date" prefWidth="100.0"/>
-            <TableColumn fx:id="endDateColumn" text="End Date" prefWidth="100.0"/>
-            <TableColumn fx:id="rentColumn" text="Monthly Rent" prefWidth="100.0"/>
-            <TableColumn fx:id="statusColumn" text="Status" prefWidth="80.0"/>
-            <TableColumn fx:id="actionsColumn" text="Actions" minWidth="150.0" prefWidth="180.0" resizable="false"/>
+            <TableColumn fx:id="contractIdColumn" text="Contract ID" prefWidth="80"/>
+            <TableColumn fx:id="tenantColumn" text="Tenant ID" prefWidth="80"/>
+            <TableColumn fx:id="propertyColumn" text="Property ID" prefWidth="80"/>
+            <TableColumn fx:id="startDateColumn" text="Start Date" prefWidth="120"/>
+            <TableColumn fx:id="statusColumn" text="Status" prefWidth="100"/>
         </columns>
     </TableView>
+
+    <!-- Controls -->
+    <HBox spacing="8.0">
+        <Button text="Add Contract" fx:id="btnAddContract"/>
+        <TextField fx:id="txtContractId" promptText="Contract ID" prefWidth="120"/>
+        <Button text="Terminate Contract" fx:id="btnTerminateContract"/>
+        <Button text="Delete Contract" fx:id="btnDeleteContract"/>
+    </HBox>
 
     <stylesheets>
         <String fx:value="@../Applicationstyle.css"/>

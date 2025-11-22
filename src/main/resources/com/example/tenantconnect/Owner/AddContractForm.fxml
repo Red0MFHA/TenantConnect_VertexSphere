@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.tenantconnect.UIcontrollers.AddContractController"
+      spacing="16.0"
+      styleClass="contracts-view">
+
+    <padding>
+        <Insets top="16" right="16" bottom="16" left="16"/>
+    </padding>
+
+    <!-- Form Title -->
+    <Label text="Add New Contract" style="-fx-text-fill: #1E3A8A; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <!-- Form Fields -->
+    <GridPane hgap="10" vgap="10">
+        <Label text="Property ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtPropertyId" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200"/>
+
+        <Label text="Tenant ID:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtTenantId" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="200"/>
+
+        <Label text="End Date:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="datePickerEndDate" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Monthly Rent:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtMonthlyRent" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Security Deposit:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtSecurityDeposit" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <!-- Action Buttons -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Save" fx:id="btnSaveContract"/>
+        <Button text="Cancel" fx:id="btnCancel"/>
+    </HBox>
+
+</VBox>
