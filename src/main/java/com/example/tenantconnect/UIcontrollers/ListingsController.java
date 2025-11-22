@@ -108,7 +108,7 @@ import java.util.List;
 public class ListingsController {
     FacadeClass f;
     // NOTE: Replace '1' with the actual ID of the logged-in owner.
-    private final int CURRENT_OWNER_ID = 1;
+    private final int CURRENT_OWNER_ID = FacadeClass.CURRENT_USER_ID;
 
     @FXML private TableView<Property> propertiesTable;
     @FXML private TableColumn<Property, String> nameColumn;
