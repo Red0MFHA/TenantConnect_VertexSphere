@@ -36,6 +36,7 @@ public class PropertyService {
         }
         return b;
     }
+
     public boolean updateProperty(int ownerId,Property p) {
         if(contractService.isContractActive(p.getProperty_id())) {
             return false;
