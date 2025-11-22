@@ -14,14 +14,16 @@ public class RentTrackingController {
     // This serves as the temporary structure for combining and displaying data
     public static class RentTableItem {
         private int paymentId; // Used for the reminder function
+        private int tenantId;
         private String tenantName;
         private String propertyName;
         private String dueDate;
         private float amount;
         private String status;
 
-        public RentTableItem(int paymentId, String tenantName, String propertyName, String dueDate, float amount, String status) {
+        public RentTableItem(int paymentId, int tenantId, String tenantName, String propertyName, String dueDate, float amount, String status) {
             this.paymentId = paymentId;
+            this.tenantId = tenantId; // <-- NEW FIELD ASSIGNMENT
             this.tenantName = tenantName;
             this.propertyName = propertyName;
             this.dueDate = dueDate;
@@ -32,6 +34,7 @@ public class RentTrackingController {
         // Getters (required for PropertyValueFactory)
         public int getPaymentId() { return paymentId; }
         public String getTenantName() { return tenantName; }
+        public int getTenantId() { return tenantId; }
         public String getPropertyName() { return propertyName; }
         public String getDueDate() { return dueDate; }
         public float getAmount() { return amount; }
@@ -47,6 +50,7 @@ public class RentTrackingController {
 
     // Use the temporary struct as the type
     @FXML private TableView<RentTableItem> rentTable;
+    @FXML private TableColumn<RentTableItem, Integer> tenantIdColumn;
     @FXML private TableColumn<RentTableItem, String> tenantColumn;
     @FXML private TableColumn<RentTableItem, String> propertyColumn;
     @FXML private TableColumn<RentTableItem, String> dueDateColumn;
@@ -63,6 +67,7 @@ public class RentTrackingController {
         f = FacadeClass.getInstance();
 
         // 1. Setup Table Columns using RentTableItem property names
+        tenantIdColumn.setCellValueFactory(new PropertyValueFactory<>("tenantId"));
         tenantColumn.setCellValueFactory(new PropertyValueFactory<>("tenantName"));
         propertyColumn.setCellValueFactory(new PropertyValueFactory<>("propertyName"));
         dueDateColumn.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
@@ -99,7 +104,7 @@ public class RentTrackingController {
     private void handleSendReminder() {
         String inputIds = reminderRowIdField.getText().trim();
         if (inputIds.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Input Required", "Please enter one or more payment IDs to send a reminder.");
+            showAlert(Alert.AlertType.WARNING, "Input Required", "Please enter one or more Tenant IDs to send a reminder.");
             return;
         }
 
@@ -107,23 +112,27 @@ public class RentTrackingController {
         String successMessages = "";
         String failureMessages = "";
 
+        String reminderMessage = "Action Required: Your rent payment is due soon or overdue. Please process payment promptly.";
+
         for (String idStr : idArray) {
             try {
-                int paymentId = Integer.parseInt(idStr.trim());
+                int tenantId = Integer.parseInt(idStr.trim());
 
-                // --- Reminder Logic Placeholder ---
-                // We need to resolve the Tenant ID from the Payment ID before calling f.getPaymentService().sendReminder(tenantId, message)
-                // For now, we'll confirm the successful parsing and prompt for the next step.
+                // --- ACTUAL SERVICE CALL: Calling the existing sendReminder(tenant_id, Message) ---
+                boolean success = f.getPaymentService().sendReminder(tenantId, reminderMessage);
 
-                successMessages += "Reminder for Payment ID " + paymentId + " ready to send (needs tenant ID lookup). \n";
-                // ----------------------------------
+                if (success) {
+                    successMessages += "Reminder processed for Tenant ID " + tenantId + ". \n";
+                } else {
+                    failureMessages += "Tenant ID " + tenantId + " not found or no outstanding payments. \n";
+                }
 
             } catch (NumberFormatException e) {
-                failureMessages += "Invalid ID: '" + idStr + "'. \n";
+                failureMessages += "Invalid ID: '" + idStr + "'. Tenant IDs must be numbers. \n";
             }
         }
 
-        String result = (successMessages.isEmpty() ? "" : "Successfully processed IDs:\n" + successMessages) +
+        String result = (successMessages.isEmpty() ? "" : "Successfully processed reminders:\n" + successMessages) +
                 (failureMessages.isEmpty() ? "" : "\nFailed IDs:\n" + failureMessages);
 
         if (!result.isEmpty()) {
@@ -139,3 +148,4 @@ public class RentTrackingController {
         alert.show();
     }
 }
+

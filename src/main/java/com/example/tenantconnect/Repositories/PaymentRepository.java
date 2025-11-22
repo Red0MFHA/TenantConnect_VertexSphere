@@ -126,6 +126,7 @@ public class PaymentRepository {
         String sql = """
 SELECT 
     pay.payment_id,
+    u.user_id AS tenant_id,
     u.full_name AS tenant_name, 
     pr.property_name,
     pay.due_date,
@@ -145,6 +146,7 @@ WHERE pr.owner_id =
             while (rs != null && rs.next()) {
                 RentTrackingController.RentTableItem item = new RentTrackingController.RentTableItem(
                         rs.getInt("payment_id"),
+                        rs.getInt("tenant_id"),
                         rs.getString("tenant_name"),
                         rs.getString("property_name"),
                         rs.getString("due_date"),
