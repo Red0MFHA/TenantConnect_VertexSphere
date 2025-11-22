@@ -26,7 +26,7 @@ public class PropertyService {
         }
         return b;
     }
-    public boolean deleteProperty(int ownerId,int propertyId) {
+    public boolean deleteProperty(int propertyId, int ownerId) {
         if(contractService.isContractActive(propertyId)){
             return false;
         }
