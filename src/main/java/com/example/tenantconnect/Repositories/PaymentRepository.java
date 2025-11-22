@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.tenantconnect.UIcontrollers.RentTrackingController;
+
 public class PaymentRepository {
 
     private DB_Handler dbHandler;
@@ -114,6 +116,47 @@ public class PaymentRepository {
     public void deletePayment(int paymentId) {
         String sql = "DELETE FROM payments WHERE payment_id = " + paymentId + ";";
         dbHandler.executeQuery(sql);
+    }
+
+    // new functioon created for renttracking
+    public List<RentTrackingController.RentTableItem> getOwnerRentTrackingData(int ownerId) {
+        List<RentTrackingController.RentTableItem> rentData = new ArrayList<>();
+        System.out.println("DEBUG: Fetching rent data for owner ID: " + ownerId);
+        // SQL joins payments, contracts, properties, and users to get all necessary display info
+        String sql = """
+SELECT 
+    pay.payment_id,
+    u.full_name AS tenant_name, 
+    pr.property_name,
+    pay.due_date,
+    pay.amount_due,
+    pay.payment_status
+FROM payments pay
+JOIN contracts c ON pay.contract_id = c.contract_id
+JOIN properties pr ON c.property_id = pr.property_id
+JOIN users u ON c.tenant_id = u.user_id
+WHERE pr.owner_id = 
+"""
+                + ownerId + // <-- CONCATENATE THE VARIABLE HERE
+                """
+             ORDER BY pay.due_date ASC;
+            """;
+        try (ResultSet rs = dbHandler.executeSelect(sql)) {
+            while (rs != null && rs.next()) {
+                RentTrackingController.RentTableItem item = new RentTrackingController.RentTableItem(
+                        rs.getInt("payment_id"),
+                        rs.getString("tenant_name"),
+                        rs.getString("property_name"),
+                        rs.getString("due_date"),
+                        rs.getFloat("amount_due"),
+                        rs.getString("payment_status")
+                );
+                rentData.add(item);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rentData;
     }
 
     // Retrieve payments by contract

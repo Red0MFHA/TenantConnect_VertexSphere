@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="24.0" styleClass="rent-tracking-view" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25">
+<VBox spacing="24.0" styleClass="rent-tracking-view" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tenantconnect.UIcontrollers.RentTrackingController" xmlns="http://javafx.com/javafx/25">
 
     <VBox spacing="8.0">
         <Label style="-fx-text-fill: #1E3A8A; -fx-font-size: 24px; -fx-font-weight: bold;" text="Rent Tracking" />

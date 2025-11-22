@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.List;
+import com.example.tenantconnect.UIcontrollers.RentTrackingController;
 public class PaymentService
 {
     PaymentRepository paymentRepository ;
@@ -103,6 +104,11 @@ public class PaymentService
         return true;
     }
 
+    // new function
+    public List<RentTrackingController.RentTableItem> getRentTrackingDataForOwner(int owner_id) {
+        // The repository handles the mapping into the Controller's inner class
+        return paymentRepository.getOwnerRentTrackingData(owner_id);
+    }
     public List<Payment> getRentHistory(int user_id,String usrType){
         if(usrType.equals("owner")){
             return paymentRepository.getHistoryPaymentsByOwner(user_id);
