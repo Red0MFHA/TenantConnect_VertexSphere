@@ -13,10 +13,6 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/tenantconnect/new.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1200, 700);
 
-        scene.getStylesheets().add(
-                HelloApplication.class.getResource("/com/example/tenantconnect/app.css").toExternalForm()
-        );
-
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

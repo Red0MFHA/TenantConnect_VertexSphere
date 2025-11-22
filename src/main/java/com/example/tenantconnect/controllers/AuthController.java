@@ -122,10 +122,14 @@ public class AuthController {
     private boolean chekUser(String email){
         return userRepo.getUserByEmail(email) != -1;
     }
+
     private void changeScene(ActionEvent event, String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Scene scene = new Scene(loader.load());
+
+            String css = getClass().getResource("/com/example/tenantconnect/app.css").toExternalForm();
+            scene.getStylesheets().add(css);
 
             Stage stage = (Stage) ((Node) event.getSource())
                     .getScene()
@@ -146,4 +150,6 @@ public class AuthController {
         alert.setContentText(msg);
         alert.show();
     }
+
+
 }
