@@ -16,13 +16,19 @@
             <Label text="Manage all your properties" style="-fx-text-fill: #6B7280;"/>
         </VBox>
 
-        <!-- Button to open the Add Property Modal -->
         <Button text=" Add Property" onAction="#handleAddPropertyClick"
                 style="-fx-background-color: #F97316; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 8 16; -fx-background-radius: 6;">
             <graphic>
                 <Label text="+" style="-fx-font-size: 14px; -fx-text-fill: white;"/>
             </graphic>
         </Button>
+
+        <Button text=" Edit Property" onAction="#handleEditPropertyClick"
+                style="-fx-background-color: #3B82F6; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 8 16; -fx-background-radius: 6;"/>
+
+        <Button text=" Remove Property" onAction="#handleRemovePropertyClick"
+                style="-fx-background-color: #EF4444; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 8 16; -fx-background-radius: 6;"/>
+
     </HBox>
 
     <TableView fx:id="propertiesTable" VBox.vgrow="ALWAYS" styleClass="universal-table">
@@ -31,11 +37,11 @@
         </columnResizePolicy>
 
         <columns>
+            <TableColumn fx:id="propertyIdColumn" text="ID" prefWidth="50.0"/>
             <TableColumn fx:id="nameColumn" text="Property Name" prefWidth="150.0"/>
             <TableColumn fx:id="addressColumn" text="Address" prefWidth="250.0"/>
             <TableColumn fx:id="unitsColumn" text="Units" prefWidth="80.0"/>
             <TableColumn fx:id="statusColumn" text="Status" prefWidth="100.0"/>
-            <TableColumn fx:id="actionsColumn" text="Actions" minWidth="200.0" prefWidth="220.0" resizable="false"/>
         </columns>
     </TableView>
 
