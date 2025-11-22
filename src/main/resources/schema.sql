@@ -133,3 +133,4 @@ CREATE TABLE notification_settings (
                                        UNIQUE(owner_id, notification_type)
 );
 
+

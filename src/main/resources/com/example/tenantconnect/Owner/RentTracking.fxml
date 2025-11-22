@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="24.0" styleClass="rent-tracking-view" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25">
+<VBox spacing="24.0" styleClass="rent-tracking-view" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tenantconnect.UIcontrollers.RentTrackingController" xmlns="http://javafx.com/javafx/25">
 
     <VBox spacing="8.0">
         <Label style="-fx-text-fill: #1E3A8A; -fx-font-size: 24px; -fx-font-weight: bold;" text="Rent Tracking" />
@@ -23,6 +23,7 @@
         </columnResizePolicy>
 
         <columns>
+            <TableColumn fx:id="tenantIdColumn" text="Tenant ID" prefWidth="75.0" />
             <TableColumn fx:id="tenantColumn" prefWidth="120.0" text="Tenant" />
             <TableColumn fx:id="propertyColumn" prefWidth="180.0" text="Property" />
             <TableColumn fx:id="dueDateColumn" prefWidth="100.0" text="Due Date" />
@@ -32,7 +33,7 @@
     </TableView>
 
     <HBox alignment="CENTER_LEFT" spacing="10.0">
-        <Label text="Enter Row ID to Send Reminder:" />
+        <Label text="Enter Tenant ID to Send Reminder:" />
         <TextField fx:id="reminderRowIdField" promptText="e.g., 1, 2, 3" maxWidth="150.0" />
         <Button fx:id="sendReminderButton"  text="Send Reminder" styleClass="primary-button" />
     </HBox>
