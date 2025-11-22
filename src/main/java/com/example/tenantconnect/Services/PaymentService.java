@@ -17,10 +17,10 @@ public class PaymentService
     PaymentRepository paymentRepository ;
     TenantService tenantService;
     NotificationService notificationService;
-    public PaymentService(){
-        paymentRepository = new PaymentRepository();
-        tenantService = new TenantService();
-        notificationService = new NotificationService();
+    public PaymentService(NotificationService notificationService, TenantService tenantService){
+        this.paymentRepository = new PaymentRepository();
+        this.tenantService = tenantService;
+        this.notificationService =notificationService;
     }
     public List<Payment> getDuePaymentsForOwner(int owner_id)
     {

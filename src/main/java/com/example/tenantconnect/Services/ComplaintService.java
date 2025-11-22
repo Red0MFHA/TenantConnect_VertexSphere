@@ -10,9 +10,9 @@ public class ComplaintService {
 
     private ComplaintRepository complaintRepo;
     private NotificationService notificationService;
-    public ComplaintService() {
+    public ComplaintService(NotificationService notificationService) {
         this.complaintRepo = new ComplaintRepository();
-        this.notificationService = new NotificationService();
+        this.notificationService = notificationService;
     }
 
     public List<Complaint> getDueComplaintsByOwner(int ownerId) {

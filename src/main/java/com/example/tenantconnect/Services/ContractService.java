@@ -9,9 +9,9 @@ import java.util.List;
 public class ContractService {
     ContractRepository contractRepository;
     NotificationService notificationService;
-    public ContractService() {
+    public ContractService(NotificationService notificationService) {
         this.contractRepository = new ContractRepository();
-        this.notificationService = new NotificationService();
+        this.notificationService = notificationService;
     }
 
     public boolean isContractActive(int propertyId){

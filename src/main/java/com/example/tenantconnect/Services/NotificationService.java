@@ -59,6 +59,27 @@ public class NotificationService {
 
         nr.addNotification(n);
     }
+    public void sendPropertyNotification(int ownerID,int propertyID,String message){
+        Notification n=new Notification();
+        n.setUser_id(ownerID);
+        n.setTitle("Assignment Notification");
+        n.setMessage(message);
+        n.setNotification_type("Notify DB");
+        n.setIs_read(Boolean.FALSE);
+        n.setRelated_entity_type("Property");
+        n.setRelated_entity_id(propertyID);
+
+        // Get the current LocalDateTime
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        // Define the desired format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        // Format the LocalDateTime to a String
+        String formattedDate = currentDateTime.format(formatter);
+
+        n.setCreated_at(formattedDate);
+
+        nr.addNotification(n);
+    }
     public void sendPaymentPaidNotification(int tenantId,int paymentID,String message){
         Notification n=new Notification();
         n.setUser_id(tenantId);
