@@ -1,51 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox alignment="CENTER"
-      spacing="40"
-      styleClass="topbar-container"
-      xmlns="http://javafx.com/javafx/17"
-      xmlns:fx="http://javafx.com/fxml/1"
-      prefHeight="64">
+<HBox fx:controller="com.example.tenantconnect.UIcontrollers.TopBarController"
+      alignment="CENTER_LEFT" spacing="32.0" styleClass="topbar-container"
+      xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21">
 
-    <!-- Left: Welcome + Live Date -->
-    <VBox alignment="CENTER_LEFT" spacing="2" style="-fx-padding: 0 0 0 16;">
-        <Label text="Welcome back, Tenant"
-               styleClass="text-large text-blue"
-               style="-fx-font-weight: 600;"/>
-        <Label fx:id="dateLabel"
-               text=""
-               styleClass="text-muted"/>
+    <VBox>
+        <Label fx:id="welcomeLabel" text="Welcome back, Property Owner" style="-fx-text-fill: #1E3A8A; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+        <Label fx:id="dateLabel" text="Wednesday, November 12, 2025" style="-fx-font-size: 12px; -fx-text-fill: #6B7280;"/>
     </VBox>
 
-    <Region HBox.hgrow="ALWAYS"/>
+    <Region HBox.hgrow="ALWAYS"/> <HBox alignment="CENTER" spacing="16.0">
 
-    <!-- Right: Notification + Profile -->
-    <HBox alignment="CENTER" spacing="24">
 
-        <!-- Notification Bell -->
-        <StackPane>
-            <Button styleClass="notification-button">
-                <graphic>
-                    <!-- Use Segoe UI Emoji or system emoji font -->
-                    <Label text="🔔" style="-fx-font-family: 'Segoe UI Emoji'; -fx-font-size: 22px;"/>
-                </graphic>
-            </Button>
-            <Label text="2" styleClass="notification-badge"/>
-        </StackPane>
-
-        <!-- Profile Badge -->
-        <HBox spacing="10" styleClass="profile-badge" alignment="CENTER">
-            <Label text="👤" style="-fx-font-family: 'Segoe UI Emoji'; -fx-font-size: 20px;"/>
-            <Label text="John Tenant" styleClass="text-blue" style="-fx-font-weight: 600;"/>
-        </HBox>
-
+    <HBox alignment="CENTER" spacing="8.0" styleClass="profile-badge">
+        <Label text="👤" style="-fx-font-size: 14px; -fx-text-fill: #1E3A8A;"/>
+        <Label fx:id="userNameLabel" text="John Owner" style="-fx-text-fill: #1E3A8A; -fx-font-weight: bold;"/>
+        <Button onAction="#handleLogout" text="Logout" style="-fx-background-color: #EF4444; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 4 8 4 8; -fx-border-radius: 4; -fx-background-radius: 4;"/>
     </HBox>
+</HBox>
 </HBox>
