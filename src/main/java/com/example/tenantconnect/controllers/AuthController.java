@@ -14,7 +14,7 @@ import java.io.IOException;
 
 import com.example.tenantconnect.Services.FacadeClass;
 import com.example.tenantconnect.Repositories.UserRepository;
-
+import com.example.tenantconnect.UIcontrollers.SessionManager;
 
 public class AuthController {
 
@@ -59,6 +59,7 @@ public class AuthController {
         if (userId != -1) {
             showAlert("Success", "Login successful! User ID: " + userId);
             FacadeClass.CURRENT_USER_ID = userId;
+            SessionManager.getInstance().login(userId);
             if(userRepo.isOwner(userId)){
                 changeScene(event, "/com/example/tenantconnect/Applayout.fxml");
             }
@@ -105,7 +106,8 @@ public class AuthController {
         if (success) {
             showAlert("Success", "Signup successful! You can now login.");
             int userId = userRepo.login(email, password);
-            FacadeClass.CURRENT_USER_ID = userId;
+            SessionManager.getInstance().login(userId);
+           FacadeClass.CURRENT_USER_ID = userId;
             if(userRepo.isOwner(userId)){
                 changeScene(event, "/com/example/tenantconnect/Applayout.fxml");
             }

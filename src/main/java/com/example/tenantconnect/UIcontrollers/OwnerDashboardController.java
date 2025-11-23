@@ -1,5 +1,8 @@
 package com.example.tenantconnect.UIcontrollers;
 
+import com.example.tenantconnect.Domain.DashboardData;
+import com.example.tenantconnect.Services.DashboardService;
+import com.example.tenantconnect.Services.FacadeClass;
 import javafx.fxml.FXML;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.XYChart;
@@ -7,65 +10,31 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-import java.util.Arrays;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class OwnerDashboardController {
 
     // FXML Injections
     @FXML private GridPane statsGrid;
     @FXML private AreaChart<String, Number> revenueChart;
-    // @FXML private GridPane actionsGrid; // REMOVED: Quick Actions FXML element
 
-    // Instance of the main controller for navigation
-    private AppLayoutController appLayoutController;
+    private DashboardService dashboardService;
+    private final int CURRENT_OWNER_ID = FacadeClass.CURRENT_USER_ID;
 
-    /**
-     * Sets the main application layout controller for navigation purposes.
-     * This is called by AppLayoutController after loading this FXML.
-     */
-    public void setAppLayoutController(AppLayoutController appLayoutController) {
-        this.appLayoutController = appLayoutController;
-    }
+    // ... (setAppLayoutController method) ...
 
     /**
      * Initializes the dashboard components after the FXML is loaded.
      */
     @FXML
     public void initialize() {
+        dashboardService = FacadeClass.getInstance().getDashboardService();
         populateStatsGrid();
         populateRevenueChart();
-        // Removed populateActionsGrid();
     }
-
-    // =========================================================================
-    // STATS GRID POPULATION
-    // =========================================================================
-
-    private void populateStatsGrid() {
-        // Data structure to hold the dashboard statistics
-        record DashboardStat(String title, String value, String styleClass) {}
-
-        List<DashboardStat> stats = Arrays.asList(
-                new DashboardStat("Total Properties", "24", "stat-blue"),
-                new DashboardStat("Occupied", "18", "stat-green"),
-                new DashboardStat("Vacant", "6", "stat-yellow"),
-                new DashboardStat("Overdue Rent", "$12,450", "stat-red"),
-                new DashboardStat("Open Complaints", "7", "stat-purple")
-        );
-
-        statsGrid.getChildren().clear();
-        for (int i = 0; i < stats.size(); i++) {
-            DashboardStat stat = stats.get(i);
-            VBox statBox = createStatBox(stat.title(), stat.value(), stat.styleClass());
-            // Arrange stats in a single row
-            statsGrid.add(statBox, i, 0);
-        }
-    }
-
-    /**
-     * Helper method to create a VBox representing a single statistic card.
-     */
+    // Insert this method into OwnerDashboardController.java
     private VBox createStatBox(String title, String value, String styleClass) {
         Label titleLabel = new Label(title);
         titleLabel.getStyleClass().add("stat-title");
@@ -80,6 +49,38 @@ public class OwnerDashboardController {
         return box;
     }
 
+    // =========================================================================
+    // STATS GRID POPULATION
+    // =========================================================================
+
+    private void populateStatsGrid() {
+        // Fetch real data from the service
+        DashboardData data = dashboardService.getStats(CURRENT_OWNER_ID);
+
+        // Data structure to hold the dashboard statistics
+        record DashboardStat(String title, String value, String styleClass) {}
+
+        // Format currency for display
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);
+
+        List<DashboardStat> stats = List.of( // Use List.of for immutable list
+                new DashboardStat("Total Properties", String.valueOf(data.getTotalProperties()), "stat-blue"),
+                new DashboardStat("Occupied", String.valueOf(data.getOccupiedProperties()), "stat-green"),
+                new DashboardStat("Vacant", String.valueOf(data.getVacantProperties()), "stat-yellow"),
+                new DashboardStat("Overdue Rent", currencyFormatter.format(data.getOverdueRentAmount()), "stat-red"),
+                new DashboardStat("Open Complaints", String.valueOf(data.getOpenComplaints()), "stat-purple")
+        );
+
+        statsGrid.getChildren().clear();
+        for (int i = 0; i < stats.size(); i++) {
+            DashboardStat stat = stats.get(i);
+            VBox statBox = createStatBox(stat.title(), stat.value(), stat.styleClass());
+            statsGrid.add(statBox, i, 0);
+        }
+    }
+
+    // ... (createStatBox helper method) ...
+
 
     // =========================================================================
     // REVENUE CHART POPULATION
@@ -88,22 +89,19 @@ public class OwnerDashboardController {
     private void populateRevenueChart() {
         // Configure the Area Chart
         revenueChart.setLegendVisible(false);
-        revenueChart.getXAxis().setLabel("Month");
-        revenueChart.getYAxis().setLabel("Revenue (USD)");
+        // Note: The X and Y axis labels are already set in the FXML
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
 
-        // Dummy data for revenue
-        series.getData().add(new XYChart.Data<>("Jan", 45000));
-        series.getData().add(new XYChart.Data<>("Feb", 52000));
-        series.getData().add(new XYChart.Data<>("Mar", 48500));
-        series.getData().add(new XYChart.Data<>("Apr", 61000));
-        series.getData().add(new XYChart.Data<>("May", 58500));
-        series.getData().add(new XYChart.Data<>("Jun", 64000));
+        // Fetch real revenue data from the service
+        List<XYChart.Data<String, Number>> chartData = dashboardService.getRevenueChartData(CURRENT_OWNER_ID);
+
+        // Add fetched data to the series
+        for (XYChart.Data<String, Number> dataPoint : chartData) {
+            series.getData().add(dataPoint);
+        }
 
         revenueChart.getData().clear();
         revenueChart.getData().add(series);
     }
-
-    // Quick action related methods and structures were removed.
 }

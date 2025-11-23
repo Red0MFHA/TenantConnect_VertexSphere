@@ -17,6 +17,20 @@ public class Notification {
         return notification_id;
     }
 
+    @Override
+    public String toString() {
+        // Format the display string for the ListView
+        // The conditional logic handles cases where created_at might be null or short
+        String formattedTime = created_at != null && created_at.length() >= 16 ? created_at.substring(0, 16) : created_at;
+
+        return String.format("[%s] %s: %s (Related ID: %d)",
+                formattedTime,
+                title,
+                message,
+                related_entity_id
+        );
+    }
+
     public void setNotification_id(int notification_id) {
         this.notification_id = notification_id;
     }

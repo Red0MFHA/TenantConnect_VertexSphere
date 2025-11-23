@@ -152,4 +152,5 @@ public class NotificationRepository {
         }
         return settings;
     }
+
 }

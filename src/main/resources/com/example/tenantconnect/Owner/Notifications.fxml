@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import java.lang.String?>
 
-<VBox spacing="24.0" styleClass="notifications-view" xmlns:fx="http://javafx.com/fxml"
+<VBox spacing="24.0" styleClass="notifications-view" fx:controller="com.example.tenantconnect.UIcontrollers.NotificationsController" xmlns:fx="http://javafx.com/fxml"
  >
 
     <VBox spacing="8.0">

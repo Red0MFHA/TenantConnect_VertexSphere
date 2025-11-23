@@ -4,7 +4,7 @@ import com.example.tenantconnect.Repositories.DB_Handler;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List;import com.example.tenantconnect.Domain.User;
 
 public class UserRepository {
 
@@ -40,6 +40,27 @@ public class UserRepository {
     }
     public boolean deleteUser(int userId) {
         return dbHandler.executeQuery("DELETE FROM users WHERE user_id=" + userId);
+    }
+    public User getUserObjectById(int userId) {
+        String sql = "SELECT * FROM users WHERE user_id=" + userId;
+        ResultSet rs = dbHandler.executeSelect(sql);
+        try {
+            if (rs != null && rs.next()) {
+                User user = new User();
+                user.id = rs.getInt("user_id");
+                user.email = rs.getString("email");
+                user.full_name = rs.getString("full_name");
+                user.user_type = rs.getString("user_type");
+                user.created_at = rs.getString("created_at");
+                user.is_active = rs.getBoolean("is_active");
+                rs.close();
+                return user;
+            }
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public List<String> getAllUsers() {

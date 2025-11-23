@@ -80,7 +80,7 @@ public class AppLayoutController {
                 break;
             case "notifications":
                 // Using mock paths for files we haven't created FXML for yet
-                fxmlPath = "/com/example/tenantconnect/Owner/" + capitalize(screenId) + ".fxml";
+                fxmlPath = "/com/example/tenantconnect/Owner/Notifications.fxml";
                 break;
             default:
                 showAlert("Navigation Error", "Unknown screen ID " + screenId, AlertType.ERROR);

@@ -15,6 +15,7 @@ public class FacadeClass {
     ComplaintService complaintService;
     PropertyService propertyService;
     TenantService tenantService;
+    DashboardService dashboardService;
 
     public static int CURRENT_USER_ID;
 
@@ -26,6 +27,7 @@ public class FacadeClass {
         contractService = new ContractService(notificationService);
         complaintService = new ComplaintService(notificationService);
         propertyService = new PropertyService(contractService,notificationService);
+        dashboardService = new DashboardService();
     }
 
     public static FacadeClass getInstance(){
@@ -53,4 +55,5 @@ public class FacadeClass {
     public TenantService getTenantService() {
         return tenantService;
     }
+    public DashboardService getDashboardService() {return dashboardService;}
 }

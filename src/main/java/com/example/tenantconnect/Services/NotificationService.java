@@ -2,7 +2,7 @@ package com.example.tenantconnect.Services;
 import com.example.tenantconnect.Repositories.NotificationRepository;
 import com.example.tenantconnect.Domain.Notification;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatter;import java.util.List;
 public class NotificationService {
     NotificationRepository nr;
     public NotificationService(){
@@ -80,6 +80,7 @@ public class NotificationService {
 
         nr.addNotification(n);
     }
+
     public void sendPaymentPaidNotification(int tenantId,int paymentID,String message){
         Notification n=new Notification();
         n.setUser_id(tenantId);
@@ -102,6 +103,10 @@ public class NotificationService {
         nr.addNotification(n);
     }
 
+    public List<Notification> getNotificationsForUser(int userId) {
+        // Calls the Repository method that fetches all notifications for the user
+        return nr.getNotificationsByUser(userId);
+    }
 
     public void sendCOmplaintUpdationNotification(int tenantId,int complaintID,String msg){
         Notification n=new Notification();

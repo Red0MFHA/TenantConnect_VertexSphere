@@ -72,6 +72,8 @@
                 style="-fx-graphic: '📄'; -fx-graphic-text-gap: 8;"
                 onAction="#handleNavigationClick"/>
 
+        <Button text="Notifications" styleClass="sidebar-button"  id="notifications" style="-fx-graphic: '💬'; -fx-graphic-text-gap: 8;" onAction="#handleNavigationClick"/>
+
 
         <!-- Spacer to push Logout down (flex-1) -->
         <Region VBox.vgrow="ALWAYS"/>
@@ -81,8 +83,6 @@
     <VBox styleClass="sidebar-footer">
         <!-- Logout Button -->
         <!-- CRITICAL FIX: Added onAction="#handleNavigationClick" and id="logout" -->
-        <Button text=" Logout" styleClass="sidebar-logout-button" id="logout"
-                style="-fx-graphic: '🚪'; -fx-graphic-text-gap: 12;"
-                onAction="#handleNavigationClick"/>
+
     </VBox>
 </VBox>
