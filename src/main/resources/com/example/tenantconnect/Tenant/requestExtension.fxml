@@ -63,7 +63,7 @@
         <HBox spacing="16">
             <Button text="Submit Request"
                     fx:id="submitButton"
-                    onAction="#onSubmitRequest"
+                    onAction="#submitExtensionRequest"
                     disable="true"
                     style="-fx-background-color: #dc2626; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 12 32; -fx-background-radius: 8;"/>
             <Button text="Cancel"

@@ -20,7 +20,7 @@ public class PaymentService
     public PaymentService(NotificationService notificationService, TenantService tenantService){
         this.paymentRepository = new PaymentRepository();
         this.tenantService = tenantService;
-        this.notificationService =notificationService;
+         this.notificationService =notificationService;
     }
     public List<Payment> getDuePaymentsForOwner(int owner_id)
     {
@@ -147,12 +147,30 @@ public class PaymentService
         return true;
     }
 
+    // //////////////////////////////////////////
+    // Payment Service "Request Extension" //////
+    // //////////////////////////////////////////
     public void requestExtension(int tenantID,PaymentExtension ext){
+
+
+        // //////////////////////////////////////////
+        // Payment Service "Find Due Payment" //////
+        // //////////////////////////////////////////
         List<Payment> pays=getDuePaymentsForTenant(ext.getTenant_id());
         for(Payment payment:pays){
             if((payment.getPayment_status().equals("pending") || payment.getPayment_status().equals("overdue")) && ext.getTenant_id()==tenantID && payment.getPayment_id()==ext.getPayment_id()){
+
+                // //////////////////////////////////////////
+                // Payment Service "Save Extension Request" //////
+                // //////////////////////////////////////////
                 paymentRepository.addPaymentExtension(ext);
+
+                // //////////////////////////////////////////
+                // Payment Service "Send Request Extension to notification" //////
+                // //////////////////////////////////////////
                 notificationService.sendExtensionUpdationNotification(tenantID, ext.getExtension_id(), "sent");
+
+
                 int ownerID = paymentRepository.getOwnerIdByPaymentId(ext.getPayment_id());
                 if(ownerID!=-1){
                     notificationService.sendExtensionUpdationNotification(ownerID, ext.getExtension_id(), "recieved : "+tenantID+"has requested an extension in payment.");

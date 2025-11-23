@@ -3,6 +3,7 @@ package com.example.tenantconnect.Tenant;
 import com.example.tenantconnect.Domain.Property;
 import com.example.tenantconnect.Repositories.DB_Handler;
 import com.example.tenantconnect.Services.FacadeClass;
+import com.example.tenantconnect.controllers.TenantController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,7 +12,7 @@ import javafx.scene.layout.VBox;
 
 import java.sql.ResultSet;
 
-public class PayRentController {
+public class PayRentController extends TenantController {
 
     private final FacadeClass facade = FacadeClass.getInstance();
     private final DB_Handler db = DB_Handler.getInstance();

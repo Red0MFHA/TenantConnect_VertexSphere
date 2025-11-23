@@ -2,6 +2,7 @@ package com.example.tenantconnect.Tenant;
 
 import com.example.tenantconnect.Domain.Payment;
 import com.example.tenantconnect.Services.FacadeClass;
+import com.example.tenantconnect.controllers.TenantController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.sql.ResultSet;
 
-public class RentHistoryController {
+public class RentHistoryController extends TenantController {
 
     private final FacadeClass facade = FacadeClass.getInstance();
 

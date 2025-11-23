@@ -4,13 +4,14 @@ import com.example.tenantconnect.Domain.Complaint;
 import com.example.tenantconnect.Domain.Property;
 import com.example.tenantconnect.Repositories.DB_Handler;
 import com.example.tenantconnect.Services.FacadeClass;
+import com.example.tenantconnect.controllers.TenantController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
 
-public class FileComplaintController {
+public class FileComplaintController extends TenantController {
 
     private final FacadeClass facade = FacadeClass.getInstance();
     private final DB_Handler db = DB_Handler.getInstance();
@@ -83,7 +84,7 @@ public class FileComplaintController {
     }
 
     @FXML
-    private void onSubmitComplaint() {
+    public void onSubmitComplaint() {
         Property selectedProperty = propertyComboBox.getValue();
 
         if (selectedProperty == null) {
