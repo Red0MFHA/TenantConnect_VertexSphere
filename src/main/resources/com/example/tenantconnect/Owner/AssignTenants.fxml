@@ -52,8 +52,10 @@
                     <TextField fx:id="contractIdField" promptText="Enter Contract ID manually" />
 
                 </VBox>
-                <Button text="Send Invitation"  prefWidth="1.7976931348623157E308"
-                        style="-fx-background-color: #F97316; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 0;"/>
+                <Button text="Send Invitation"
+                        prefWidth="1.7976931348623157E308"
+                        style="-fx-background-color: #F97316; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 0;"
+                        onAction="#handleSendInvitationClick"/>
             </VBox>
         </VBox>
     </VBox>

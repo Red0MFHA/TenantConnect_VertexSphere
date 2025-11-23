@@ -87,7 +87,7 @@ public class AssignTenantController {
             } else {
                 showAlert(Alert.AlertType.ERROR,
                         "Failed",
-                        "Could not assign tenant. Check if the tenant already exists or the property is full.");
+                        "Could not assign tenant. Check if the Assignment already exists or the property is full.");
             }
 
         } catch (Exception e) {
