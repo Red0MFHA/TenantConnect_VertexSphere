@@ -1,58 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      spacing="20"
-      prefWidth="800"
-      prefHeight="600"
-      alignment="TOP_LEFT">
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.tenantconnect.Tenant.RentHistoryController"
+      spacing="25" alignment="TOP_CENTER">
 
     <padding>
-        <Insets top="20" left="20" right="20" bottom="20"/>
+        <Insets top="30" right="40" bottom="30" left="40"/>
     </padding>
 
     <!-- Header -->
-    <VBox spacing="5">
-        <Label text="Rent History" style="-fx-font-size: 24; -fx-text-fill: #1E3A8A; -fx-font-weight: bold;"/>
-        <Label text="View your complete payment history" style="-fx-font-size: 14; -fx-text-fill: #6B7280;"/>
+    <VBox spacing="8" alignment="CENTER_LEFT">
+        <Label text="Rent History"
+               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1e40af;"/>
+        <Label text="All your rent payments in one place"
+               style="-fx-font-size: 15px; -fx-text-fill: #64748b;"/>
     </VBox>
 
-    <!-- Rent History Table -->
-    <TableView prefHeight="400" prefWidth="780">
+    <!-- Table -->
+    <TableView fx:id="rentTable" prefHeight="520" prefWidth="850">
         <columns>
-            <TableColumn text="Month" prefWidth="120">
-                <cellValueFactory>
-                    <PropertyValueFactory property="month"/>
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Amount" prefWidth="100">
-                <cellValueFactory>
-                    <PropertyValueFactory property="amount"/>
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Paid Date" prefWidth="120">
-                <cellValueFactory>
-                    <PropertyValueFactory property="paidDate"/>
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Payment Method" prefWidth="150">
-                <cellValueFactory>
-                    <PropertyValueFactory property="method"/>
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Receipt #" prefWidth="150">
-                <cellValueFactory>
-                    <PropertyValueFactory property="receipt"/>
-                </cellValueFactory>
-            </TableColumn>
+            <TableColumn fx:id="monthCol" text="Month" prefWidth="140" />
+            <TableColumn fx:id="dueDateCol" text="Due Date" prefWidth="130" />
+            <TableColumn fx:id="amountCol" text="Amount" prefWidth="120" style="-fx-alignment: CENTER_RIGHT;" />
+            <TableColumn fx:id="statusCol" text="Status" prefWidth="110" />
+            <TableColumn fx:id="paidDateCol" text="Paid On" prefWidth="140" />
+            <TableColumn fx:id="propertyCol" text="Property" prefWidth="280" />
         </columns>
     </TableView>
 
+    <!-- Empty State Label -->
+    <Label fx:id="emptyLabel"
+           text="No payment history found"
+           visible="false"
+           style="-fx-font-size: 18px; -fx-text-fill: #94a3b8;"
+           VBox.vgrow="ALWAYS" />
 </VBox>

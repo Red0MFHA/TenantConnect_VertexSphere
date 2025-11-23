@@ -1,53 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/17"
+<VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
-      spacing="28"
-      alignment="TOP_LEFT">
+      fx:controller="com.example.tenantconnect.Tenant.RentStatusController"
+      spacing="28" alignment="TOP_CENTER">
 
     <padding>
-        <Insets top="32" left="40" right="40" bottom="40"/>
+        <Insets top="32" right="40" bottom="40" left="40"/>
     </padding>
 
     <!-- Header -->
-    <VBox spacing="8">
-        <Label text="Rent Status" style="-fx-font-size: 24; -fx-text-fill: #1E3A8A; -fx-font-weight: bold;"/>
-
-        <Label text="View your current rent payment status" styleClass="text-muted"/>
+    <VBox spacing="8" alignment="CENTER_LEFT">
+        <Label text="Rent Status"
+               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1e40af;"/>
+        <Label text="Your current rent payment status at a glance"
+               style="-fx-font-size: 15px; -fx-text-fill: #64748b;"/>
     </VBox>
 
-    <!-- Beautiful Styled Table -->
-    <TableView fx:id="rentStatusTable"
-               prefHeight="520"
-               styleClass="table-view">
-
+    <!-- Table -->
+    <TableView fx:id="rentStatusTable" prefHeight="520" prefWidth="850">
         <columns>
-            <TableColumn text="Month" prefWidth="180">
-                <cellValueFactory><PropertyValueFactory property="month"/></cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Amount" prefWidth="120">
-                <cellValueFactory><PropertyValueFactory property="amount"/></cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Due Date" prefWidth="140">
-                <cellValueFactory><PropertyValueFactory property="dueDate"/></cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Paid Date" prefWidth="140">
-                <cellValueFactory><PropertyValueFactory property="paidDate"/></cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Status" prefWidth="160">
-                <cellValueFactory><PropertyValueFactory property="status"/></cellValueFactory>
-            </TableColumn>
+            <TableColumn fx:id="monthCol" text="Month" prefWidth="160" />
+            <TableColumn fx:id="amountCol" text="Amount" prefWidth="130" style="-fx-alignment: CENTER_RIGHT;" />
+            <TableColumn fx:id="dueDateCol" text="Due Date" prefWidth="140" />
+            <TableColumn fx:id="paidDateCol" text="Paid Date" prefWidth="140" />
+            <TableColumn fx:id="statusCol" text="Status" prefWidth="130" />
+            <TableColumn fx:id="propertyCol" text="Property" prefWidth="240" />
         </columns>
 
         <placeholder>
-            <Label text="No rent records found" styleClass="text-muted" style="-fx-padding: 20;"/>
+            <Label text="No rent records found"
+                   style="-fx-font-size: 18px; -fx-text-fill: #94a3b8; -fx-padding: 40;"/>
         </placeholder>
     </TableView>
 </VBox>

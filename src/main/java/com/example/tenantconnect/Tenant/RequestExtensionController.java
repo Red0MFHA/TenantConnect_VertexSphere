@@ -99,13 +99,16 @@ public class RequestExtensionController {
 
     private Property getPropertyByContractId(int contractId) {
         String sql = """
-            SELECT p.property_id, p.property_name, p.address
-            FROM properties p
-            JOIN contracts c ON p.property_id = c.property_id
-            WHERE c.contract_id = ?
-            """;
+        SELECT p.property_id, p.property_name, p.address
+        FROM properties p
+        JOIN contracts c ON p.property_id = c.property_id
+        WHERE c.contract_id = ?
+        """;
 
-        try (ResultSet rs = db.executeSelect(sql)) {
+        // Manually replace the ? with the actual contractId
+        String finalSql = sql.replace("?", String.valueOf(contractId));
+
+        try (ResultSet rs = db.executeSelect(finalSql)) {
             if (rs != null && rs.next()) {
                 Property p = new Property();
                 p.setProperty_id(rs.getInt("property_id"));
