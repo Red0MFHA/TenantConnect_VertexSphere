@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.Button?>
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.tenantconnect.Tenant.RequestExtensionController"
       spacing="28"
       alignment="TOP_LEFT">
 
@@ -20,55 +16,59 @@
 
     <!-- Header -->
     <VBox spacing="6">
-        <Label text="Request Extension" style="-fx-font-size: 24; -fx-text-fill: #1E3A8A; -fx-font-weight: bold;"/>
-        <Label text="Request a payment due date extension" styleClass="text-muted"/>
+        <Label text="Request Payment Extension"
+               style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #1e40af;"/>
+        <Label text="Select a property and request more time to pay rent"
+               style="-fx-font-size: 14; -fx-text-fill: #64748b;"/>
     </VBox>
 
-    <!-- Current Due Date Card -->
-    <StackPane styleClass="universal-card"
-               style="-fx-background-color: #E0F2FE; -fx-padding: 20;">
+    <!-- Property Selection -->
+    <VBox spacing="10">
+        <Label text="Select Property" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+        <ComboBox fx:id="propertyComboBox"
+                  prefWidth="520"
+                  promptText="Choose a property with pending rent..."/>
+    </VBox>
+
+    <!-- Current Due Date Card (updates when property selected) -->
+    <StackPane style="-fx-background-color: #f0f9ff; -fx-background-radius: 12; -fx-padding: 20;">
         <HBox spacing="16" alignment="CENTER_LEFT">
-            <!-- Calendar Icon – real icon, no text, perfect size -->
             <Label text="calendar_today"
-                   style="-fx-font-family: 'Material Icons'; -fx-font-size: 32px; -fx-text-fill: #1E3A8A;"/>            <VBox spacing="4">
-                <Label text="Current Due Date" styleClass="text-muted label-sm"/>
-                <Label text="December 15, 2025" styleClass="text-large text-blue"/>
+                   style="-fx-font-family: 'Material Icons'; -fx-font-size: 36px; -fx-text-fill: #0369a1;"/>
+            <VBox spacing="4">
+                <Label text="Current Due Date" style="-fx-font-size: 13; -fx-text-fill: #475569;"/>
+                <Label fx:id="currentDueDateLabel"
+                       text="Select	property above"
+                       style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #1e40af;"/>
             </VBox>
         </HBox>
     </StackPane>
 
-    <!-- Extension Request Form -->
-    <VBox spacing="24" maxWidth="520" alignment="TOP_LEFT">
+    <!-- Form -->
+    <VBox spacing="24" maxWidth="560">
 
-        <!-- Requested New Date -->
         <VBox spacing="8">
-            <Label text="Requested New Date" styleClass="text-bold"/>
-            <DatePicker fx:id="requestedDatePicker"
-                        prefWidth="300"
-                        styleClass="text-field"/>
+            <Label text="New Requested Due Date" style="-fx-font-size: 15; -fx-font-weight: bold;"/>
+            <DatePicker fx:id="requestedDatePicker" prefWidth="340"/>
         </VBox>
 
-        <!-- Reason for Extension -->
         <VBox spacing="8">
-            <Label text="Reason for Extension" styleClass="text-bold"/>
+            <Label text="Reason for Extension" style="-fx-font-size: 15; -fx-font-weight: bold;"/>
             <TextArea fx:id="reasonTextArea"
-                      promptText="Please explain why you need an extension..."
-                      prefRowCount="7"
-                      prefWidth="520"
-                      styleClass="text-area"/>
+                      promptText="Explain why you need more time..."
+                      prefRowCount="6"
+                      wrapText="true"/>
         </VBox>
 
-        <!-- Submit Button -->
-        <HBox spacing="12" alignment="CENTER_LEFT" style="-fx-padding: 12 0 0 0;">
+        <HBox spacing="16">
             <Button text="Submit Request"
-                    styleClass="button-primary btn-primary"
-                    prefWidth="180"
-                    prefHeight="44"/>
+                    fx:id="submitButton"
+                    onAction="#onSubmitRequest"
+                    disable="true"
+                    style="-fx-background-color: #dc2626; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 12 32; -fx-background-radius: 8;"/>
             <Button text="Cancel"
-                    styleClass="button-outline"
-                    prefWidth="120"
-                    prefHeight="44"/>
+                    onAction="#onCancel"
+                    style="-fx-background-color: #e2e8f0; -fx-padding: 12 24; -fx-background-radius: 8;"/>
         </HBox>
     </VBox>
-
 </VBox>

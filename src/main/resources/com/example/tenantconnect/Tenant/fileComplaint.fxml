@@ -3,109 +3,54 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import java.net.URL?>
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-      spacing="24" styleClass="root-container"
-      fx:controller="com.example.tenantconnect.Tenant.FileComplaintController">
+        fx:controller="com.example.tenantconnect.Tenant.FileComplaintController"
+        spacing="25" alignment="CENTER">
 
-    <padding>
-        <Insets top="40" right="40" bottom="40" left="40"/>
-    </padding>
+<padding>
+<Insets top="40" right="60" bottom="40" left="60"/>
+</padding>
 
-    <!-- Header Section -->
-    <VBox spacing="8">
+<Label text="File a New Complaint"
+       style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #1e40af;"/>
 
-        <Label text="File Complaint" style="-fx-font-size: 24; -fx-text-fill: #1E3A8A; -fx-font-weight: bold;"/>
-<!--        <Label text="File Complaint" styleClass="header-title">-->
-<!--            <font>-->
-<!--                <Font name="System Bold" size="32"/>-->
-<!--            </font>-->
-<!--        </Label>-->
+        <!-- Property Selection -->
+<VBox spacing="10" alignment="CENTER_LEFT" prefWidth="650">
+<Label text="Property" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+<ComboBox fx:id="propertyComboBox"
+          prefWidth="650"
+          promptText="Select your property..."/>
+</VBox>
 
-        <Label text="Submit a complaint or maintenance request" styleClass="header-subtitle">
-            <font>
-                <Font size="14"/>
-            </font>
-        </Label>
-    </VBox>
+        <!-- Category -->
+<VBox spacing="10" alignment="CENTER_LEFT" prefWidth="650">
+<Label text="Category" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+<ComboBox fx:id="categoryComboBox" prefWidth="650"/>
+</VBox>
 
-    <!-- Form Container -->
-    <VBox spacing="20" styleClass="form-container" maxWidth="800">
+        <!-- Title -->
+<VBox spacing="10" alignment="CENTER_LEFT" prefWidth="650">
+<Label text="Title" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+<TextField fx:id="titleTextField" promptText="e.g. Leaking pipe in kitchen"/>
+</VBox>
 
-        <!-- Form Header -->
-        <VBox spacing="4">
-            <Label text="New Complaint" styleClass="form-title">
-                <font>
-                    <Font name="System Bold" size="20"/>
-                </font>
-            </Label>
-            <Label text="Provide details about your issue" styleClass="form-description">
-                <font>
-                    <Font size="13"/>
-                </font>
-            </Label>
-        </VBox>
+        <!-- Description -->
+<VBox spacing="10" alignment="CENTER_LEFT" prefWidth="650">
+<Label text="Description" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+<TextArea fx:id="descriptionTextArea"
+          prefRowCount="6"
+          wrapText="true"
+          promptText="Describe the issue in detail..."/>
+</VBox>
 
-        <Separator/>
-
-        <!-- Form Fields -->
-        <VBox spacing="24">
-
-            <!-- Category Field -->
-            <VBox spacing="8">
-                <Label text="Category" styleClass="field-label">
-                    <font>
-                        <Font name="System Bold" size="13"/>
-                    </font>
-                </Label>
-                <ComboBox fx:id="categoryComboBox" promptText="Select category"
-                          styleClass="form-combo" maxWidth="Infinity"/>
-            </VBox>
-
-            <!-- Title Field -->
-            <VBox spacing="8">
-                <Label text="Title" styleClass="field-label">
-                    <font>
-                        <Font name="System Bold" size="13"/>
-                    </font>
-                </Label>
-                <TextField fx:id="titleTextField"
-                           promptText="Brief description of the issue"
-                           styleClass="form-text-field"/>
-            </VBox>
-
-            <!-- Description Field -->
-            <VBox spacing="8">
-                <Label text="Description" styleClass="field-label">
-                    <font>
-                        <Font name="System Bold" size="13"/>
-                    </font>
-                </Label>
-                <TextArea fx:id="descriptionTextArea"
-                          promptText="Provide detailed information about your complaint..."
-                          wrapText="true"
-                          prefRowCount="6"
-                          styleClass="form-text-area"/>
-            </VBox>
-
-        </VBox>
-
-        <Separator/>
-
-        <!-- Submit Button -->
-        <HBox alignment="CENTER_RIGHT" spacing="12">
-            <Button text="Cancel" styleClass="cancel-button"
-                    fx:id="cancelButton" minWidth="100"/>
-            <Button text="Submit Complaint" styleClass="submit-button"
-                    fx:id="submitButton" minWidth="150"/>
-        </HBox>
-
-    </VBox>
-
-<!--    <stylesheets>-->
-<!--        <URL value="@complaint-form.css"/>-->
-<!--    </stylesheets>-->
-
+        <!-- Buttons -->
+<HBox spacing="20" alignment="CENTER">
+<Button text="Cancel"
+        onAction="#onCancel"
+        style="-fx-background-color: #e2e8f0; -fx-font-size: 16px; -fx-padding: 12 30;"/>
+<Button text="Submit Complaint"
+        onAction="#onSubmitComplaint"
+        style="-fx-background-color: #dc2626; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 12 40; -fx-background-radius: 8;"/>
+</HBox>
 </VBox>

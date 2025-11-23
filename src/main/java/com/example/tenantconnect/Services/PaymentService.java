@@ -203,7 +203,7 @@ public Boolean approveExtentionRequest(int extension_ID,String Message){
     public void requestExtension(int tenantID,PaymentExtension ext){
         List<Payment> pays=getDuePaymentsForTenant(ext.getTenant_id());
         for(Payment payment:pays){
-            if(payment.getPayment_status().equals("pending") && ext.getTenant_id()==tenantID && payment.getPayment_id()==ext.getPayment_id()){
+            if((payment.getPayment_status().equals("pending") || payment.getPayment_status().equals("overdue")) && ext.getTenant_id()==tenantID && payment.getPayment_id()==ext.getPayment_id()){
                 paymentRepository.addPaymentExtension(ext);
                 notificationService.sendExtensionUpdationNotification(tenantID, ext.getExtension_id(), "sent");
                 int ownerID = paymentRepository.getOwnerIdByPaymentId(ext.getPayment_id());
