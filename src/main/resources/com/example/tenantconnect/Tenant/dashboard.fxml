@@ -8,6 +8,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.tenantconnect.UIcontrollers.TenantDashboardController"
       spacing="40"
       alignment="TOP_LEFT">
 
@@ -18,7 +19,6 @@
     <!-- Header -->
     <VBox spacing="8">
         <Label text="Dashboard" style="-fx-font-size: 24; -fx-text-fill: #1E3A8A; -fx-font-weight: bold;"/>
-<!--        <Label text="Dashboard" styleClass="heading-1"/>-->
         <Label text="Overview of your rental information" styleClass="text-muted"/>
     </VBox>
 
@@ -31,7 +31,7 @@
                 <Label text="💰" style="-fx-font-size: 36px;"/>
                 <VBox spacing="4">
                     <Label text="Current Rent Status" styleClass="text-muted"/>
-                    <Label text="Paid" styleClass="heading-3 text-green"/>
+                    <Label fx:id="rentStatusLabel" text="Paid" styleClass="heading-3 text-green"/>
                 </VBox>
             </HBox>
         </VBox>
@@ -42,7 +42,7 @@
                 <Label text="📅" style="-fx-font-size: 36px;"/>
                 <VBox spacing="4">
                     <Label text="Next Due Date" styleClass="text-muted"/>
-                    <Label text="Dec 15, 2025" styleClass="heading-3 text-blue"/>
+                    <Label fx:id="nextDueDateLabel" text="Dec 15, 2025" styleClass="heading-3 text-blue"/>
                 </VBox>
             </HBox>
         </VBox>
@@ -53,7 +53,7 @@
                 <Label text="⚠️" style="-fx-font-size: 36px;"/>
                 <VBox spacing="4">
                     <Label text="Open Complaints" styleClass="text-muted"/>
-                    <Label text="2" styleClass="heading-3 text-orange"/>
+                    <Label fx:id="openComplaintsLabel" text="2" styleClass="heading-3 text-orange"/>
                 </VBox>
             </HBox>
         </VBox>
@@ -63,8 +63,10 @@
             <HBox alignment="CENTER_LEFT" spacing="16">
                 <Label text="🏠" style="-fx-font-size: 36px;"/>
                 <VBox spacing="4">
-                    <Label text="My Property" styleClass="text-muted"/>
-                    <Label text="Sunset Apt 101" styleClass="heading-3 text-blue"/>
+                    <VBox spacing="4">
+                        <Label text="My Property" styleClass="text-muted"/>
+                        <VBox fx:id="myPropertyContainer"/>
+                    </VBox>
                 </VBox>
             </HBox>
         </VBox>
@@ -75,41 +77,19 @@
         <VBox styleClass="card-header">
             <Label text="Recent Activity" styleClass="heading-3 text-blue"/>
         </VBox>
-        <VBox spacing="16" style="-fx-padding: 0 24 24 24;">
-            <HBox spacing="20" alignment="BASELINE_LEFT">
-                <Label text="•" style="-fx-text-fill: #10B981;"/>
-                <VBox spacing="4">
-                    <Label text="Rent paid for November" styleClass="text-blue"/>
-                    <Label text="2025-11-01" styleClass="text-muted"/>
-                </VBox>
-            </HBox>
-            <HBox spacing="20" alignment="BASELINE_LEFT">
-                <Label text="•" style="-fx-text-fill: #F59E0B;"/>
-                <VBox spacing="4">
-                    <Label text="Complaint filed - Leaky faucet" styleClass="text-blue"/>
-                    <Label text="2025-10-28" styleClass="text-muted"/>
-                </VBox>
-            </HBox>
-            <HBox spacing="20" alignment="BASELINE_LEFT">
-                <Label text="•" style="-fx-text-fill: #10B981;"/>
-                <VBox spacing="4">
-                    <Label text="Extension request approved" styleClass="text-blue"/>
-                    <Label text="2025-10-15" styleClass="text-muted"/>
-                </VBox>
-            </HBox>
-        </VBox>
+        <VBox fx:id="recentActivityContainer" spacing="16" style="-fx-padding: 0 24 24 24;"/>
     </VBox>
 
-    <!-- Quick Actions -->
-    <VBox styleClass="universal-card" spacing="20">
-        <VBox styleClass="card-header">
-            <Label text="Quick Actions" styleClass="heading-3 text-blue"/>
-        </VBox>
-        <HBox spacing="24" alignment="CENTER_LEFT" style="-fx-padding: 0 24 24 24;">
-            <Button text="Pay Rent Now" styleClass="btn-primary" prefWidth="220" prefHeight="72"/>
-            <Button text="File Complaint" styleClass="btn-outline" prefWidth="220" prefHeight="72"/>
-            <Button text="Request Extension" styleClass="btn-outline" prefWidth="220" prefHeight="72"/>
-        </HBox>
-    </VBox>
+<!--    &lt;!&ndash; Quick Actions &ndash;&gt;-->
+<!--    <VBox styleClass="universal-card" spacing="20">-->
+<!--        <VBox styleClass="card-header">-->
+<!--            <Label text="Quick Actions" styleClass="heading-3 text-blue"/>-->
+<!--        </VBox>-->
+<!--        <HBox spacing="24" alignment="CENTER_LEFT" style="-fx-padding: 0 24 24 24;">-->
+<!--            <Button fx:id="payRentButton" text="Pay Rent Now" onAction="#payRentNow" styleClass="btn-primary" prefWidth="220" prefHeight="72"/>-->
+<!--            <Button fx:id="fileComplaintButton" text="File Complaint" onAction="#fileComplaint" styleClass="btn-outline" prefWidth="220" prefHeight="72"/>-->
+<!--            <Button fx:id="requestExtensionButton" text="Request Extension" onAction="#requestExtension" styleClass="btn-outline" prefWidth="220" prefHeight="72"/>-->
+<!--        </HBox>-->
+<!--    </VBox>-->
 
 </VBox>

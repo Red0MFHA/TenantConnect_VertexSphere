@@ -17,7 +17,7 @@ public class TenantController {
     @FXML private VBox sidebar;
 
     private Button dashboardBtn, fileComplaintBtn, payRentBtn;
-    private Button propertyAssignmentBtn, rentHistoryBtn, rentStatusBtn, requestExtensionBtn;
+    private Button propertyAssignmentBtn, rentHistoryBtn, rentStatusBtn, requestExtensionBtn,notificationBtn;
 
     private Button currentActive; // For active highlight
 
@@ -31,7 +31,7 @@ public class TenantController {
         rentHistoryBtn        = (Button) sidebar.lookup("#rentHistoryBtn");
         rentStatusBtn         = (Button) sidebar.lookup("#rentStatusBtn");
         requestExtensionBtn   = (Button) sidebar.lookup("#requestExtensionBtn");
-
+        notificationBtn = (Button) sidebar.lookup("#notificationBtn");
         // Set actions with active highlight
         dashboardBtn.setOnAction(e -> setActiveAndLoad(dashboardBtn, "Dashboard.fxml"));
         fileComplaintBtn.setOnAction(e -> setActiveAndLoad(fileComplaintBtn, "FileComplaint.fxml"));
@@ -40,7 +40,7 @@ public class TenantController {
         rentHistoryBtn.setOnAction(e -> setActiveAndLoad(rentHistoryBtn, "RentHistory.fxml"));
         rentStatusBtn.setOnAction(e -> setActiveAndLoad(rentStatusBtn, "RentStatus.fxml"));
         requestExtensionBtn.setOnAction(e -> setActiveAndLoad(requestExtensionBtn, "RequestExtension.fxml"));
-
+        notificationBtn.setOnAction(e -> setActiveAndLoad(notificationBtn, "Notifications.fxml"));
         // Load Dashboard by default and make it active
         setActiveAndLoad(dashboardBtn, "Dashboard.fxml");
     }

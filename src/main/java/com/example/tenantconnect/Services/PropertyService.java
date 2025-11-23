@@ -1,10 +1,14 @@
 package com.example.tenantconnect.Services;
 
+import com.example.tenantconnect.Domain.Contract;
 import com.example.tenantconnect.Domain.Property;
+import com.example.tenantconnect.Domain.PropertyAssignment;
 import com.example.tenantconnect.Repositories.PropertyRepository;
 import com.example.tenantconnect.Services.ContractService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PropertyService {
     PropertyRepository propertyRepository;
@@ -19,6 +23,28 @@ public class PropertyService {
     public List<Property> getOwnerProperties(int ownerId) {
         return propertyRepository.getPropertiesByOwnerId(ownerId);
     }
+
+
+    public List<Property> getTenantProperties(int tenantId) {
+        // Get all assignments for this tenant
+        List<PropertyAssignment> assignments = contractService.getTenantAssignments(tenantId);
+
+        // Extract the property IDs assigned to this tenant
+        Set<Integer> tenantPropertyIds = assignments.stream()
+                .map(a -> a.propertyId) // access public field directly
+                .collect(Collectors.toSet());
+
+        // Get all properties
+        List<Property> allProperties = propertyRepository.getAllProperties();
+
+        // Filter properties whose IDs are in tenantPropertyIds
+        List<Property> tenantProperties = allProperties.stream()
+                .filter(p -> tenantPropertyIds.contains(p.getProperty_id())) // use getter if field is private
+                .collect(Collectors.toList());
+
+        return tenantProperties;
+    }
+
     public boolean addProperty(int ownerId,Property p) {
         boolean b=propertyRepository.addProperty(ownerId,p.getProperty_name(),p.getAddress(),p.getCity(),p.getState(),p.getZip_code(),p.getProperty_type(),p.getRent_amount(),p.getSecurity_deposit(),p.getStatus());
         if(b==true){

@@ -25,6 +25,7 @@
         <Button text="Rent History"        fx:id="rentHistoryBtn"        styleClass="sidebar-button" maxWidth="Infinity"/>
         <Button text="Rent Status"         fx:id="rentStatusBtn"         styleClass="sidebar-button" maxWidth="Infinity"/>
         <Button text="Request Extension"   fx:id="requestExtensionBtn"   styleClass="sidebar-button" maxWidth="Infinity"/>
+        <Button text="Notifications"   fx:id="notificationBtn"   styleClass="sidebar-button" maxWidth="Infinity"/>
     </VBox>
 
     <!-- Push everything to top -->

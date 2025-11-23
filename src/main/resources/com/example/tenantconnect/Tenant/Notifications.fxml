@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+<?import java.lang.String?>
+
+<VBox spacing="24.0" styleClass="notifications-view" fx:controller="com.example.tenantconnect.UIcontrollers.NotificationsController" xmlns:fx="http://javafx.com/fxml"
+>
+
+    <VBox spacing="8.0">
+        <Label text="Notifications" style="-fx-text-fill: #1E3A8A; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <Label text="Stay updated with all activities" style="-fx-text-fill: #6B7280;"/>
+    </VBox>
+
+    <ListView fx:id="notificationsListView" VBox.vgrow="ALWAYS" styleClass="notification-list">
+    </ListView>
+
+    <stylesheets>
+        <String fx:value="@../Applicationstyle.css"/>
+    </stylesheets>
+</VBox>
+

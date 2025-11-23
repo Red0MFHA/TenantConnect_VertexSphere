@@ -1,80 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/17"
-      xmlns:fx="http://javafx.com/fxml/1"
-      spacing="32"
-      alignment="TOP_LEFT">
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.tenantconnect.UIcontrollers.TenantAssignmentController"
+      spacing="24"
+      alignment="TOP_LEFT"
+      style="-fx-padding: 32;">
 
-    <padding>
-        <Insets top="40" left="48" right="48" bottom="40"/>
-    </padding>
+    <!-- Heading -->
+    <Label text="Pending Contract Assignments"
+           style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1E3A8A;" />
 
-    <!-- Header -->
-    <VBox spacing="8">
-        <Label text="Property Assignment" style="-fx-font-size: 24; -fx-text-fill: #1E3A8A; -fx-font-weight: bold;"/>
+    <!-- Table -->
+    <TableView fx:id="contractsTable" prefHeight="300">
+        <columns>
+            <TableColumn fx:id="colContractId" text="Contract ID" prefWidth="120"/>
+            <TableColumn fx:id="colPropertyId" text="Property ID" prefWidth="120"/>
+            <TableColumn fx:id="colCreatedAt" text="Created At" prefWidth="180"/>
+        </columns>
+    </TableView>
 
-        <Label text="Review and respond to property assignment" styleClass="text-muted"/>
-    </VBox>
+    <!-- Select Contract -->
+    <HBox spacing="12">
+        <Label text="Enter Contract ID:"/>
+        <TextField fx:id="contractIdField" promptText="e.g. 101" prefWidth="200"/>
+    </HBox>
 
-    <!-- Property Details Card -->
-    <VBox styleClass="card" spacing="28">
-
-        <!-- Property -->
-        <HBox spacing="24" alignment="BASELINE_LEFT">
-            <Label text="🏠" style="-fx-font-size: 32px;"/>
-            <VBox spacing="6">
-                <Label text="Sunset Apartments - Unit 101" styleClass="heading-3 text-blue"/>
-                <Label text="123 Main Street, Cityville, State 12345" styleClass="text-muted"/>
-            </VBox>
-        </HBox>
-
-        <!-- Rent -->
-        <HBox spacing="24" alignment="BASELINE_LEFT">
-            <Label text="💰" style="-fx-font-size: 32px;"/>
-            <VBox spacing="6">
-                <Label text="1,200 / month" styleClass="heading-2 text-orange"/>
-                <Label text="Security Deposit: $1,200" styleClass="text-muted"/>
-            </VBox>
-        </HBox>
-
-        <!-- Lease Period -->
-        <HBox spacing="24" alignment="BASELINE_LEFT">
-            <Label text="📅" style="-fx-font-size: 32px;"/>
-            <Label text="January 1, 2025 – December 31, 2025" styleClass="label-lg text-bold"/>
-        </HBox>
-
-        <!-- Status -->
-        <HBox spacing="24" alignment="BASELINE_LEFT">
-            <Label text="⏳" style="-fx-font-size: 32px;"/>
-            <Label text="Pending Your Response" styleClass="text-bold" style="-fx-text-fill: #DC2626;"/>
-        </HBox>
-    </VBox>
-
-    <!-- Contract Terms -->
-    <VBox spacing="16">
-        <Label text="Contract Terms" styleClass="heading-3 text-blue"/>
-        <VBox spacing="12" styleClass="card" style="-fx-background-color: #F8FAFC; -fx-padding: 24;">
-            <Label text="• Monthly rent of $1,200 due on the 15th of each month"/>
-            <Label text="• Security deposit of $1,200 (refundable)"/>
-            <Label text="• Lease term: 12 months"/>
-            <Label text="• Utilities included: Water, Trash Collection"/>
-            <Label text="• Tenant responsible for: Electricity, Internet"/>
-            <Label text="• No pets allowed"/>
-            <Label text="• 30-day notice required for lease termination"/>
-        </VBox>
+    <!-- Message to Owner -->
+    <VBox spacing="6">
+        <Label text="Message to Owner (Optional):"/>
+        <TextArea fx:id="messageField" prefRowCount="3"
+                  promptText="Write a message (only used when negotiating)..."/>
     </VBox>
 
     <!-- Action Buttons -->
-    <HBox spacing="16" alignment="CENTER_LEFT" style="-fx-padding: 20 0 0 0;">
-        <Button text="Accept Assignment" styleClass="btn-success" prefWidth="200" prefHeight="52"/>
-        <Button text="Negotiate Terms" styleClass="btn-secondary" prefWidth="200" prefHeight="52"/>
-        <Button text="Reject Assignment" styleClass="btn-danger" prefWidth="200" prefHeight="52"/>
+    <HBox spacing="20" style="-fx-padding: 16 0 0 0;">
+        <Button fx:id="btnAccept" text="Accept Contract" prefWidth="180" style="-fx-background-color: #16A34A; -fx-text-fill: white;"/>
+        <Button fx:id="btnNegotiate" text="Negotiate" prefWidth="180" style="-fx-background-color: #2563EB; -fx-text-fill: white;"/>
+        <Button fx:id="btnReject" text="Reject Contract" prefWidth="180" style="-fx-background-color: #DC2626; -fx-text-fill: white;"/>
     </HBox>
 
 </VBox>

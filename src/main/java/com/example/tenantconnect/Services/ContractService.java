@@ -1,7 +1,9 @@
 package com.example.tenantconnect.Services;
 
 import com.example.tenantconnect.Domain.Contract;
+import com.example.tenantconnect.Domain.PropertyAssignment;
 import com.example.tenantconnect.Repositories.ContractRepository;
+import com.example.tenantconnect.Repositories.PropertyRepository;
 import com.example.tenantconnect.Services.NotificationService;
 
 import java.util.List;
@@ -9,8 +11,10 @@ import java.util.List;
 public class ContractService {
     ContractRepository contractRepository;
     NotificationService notificationService;
+    PropertyRepository propertyRepository;
     public ContractService(NotificationService notificationService) {
         this.contractRepository = new ContractRepository();
+        propertyRepository = new PropertyRepository();
         this.notificationService = notificationService;
     }
 
@@ -29,8 +33,8 @@ public class ContractService {
             List<Contract> activeContracts = contractRepository.getContractsByPropertyAndTenant(contract.getProperty_id(),contract.getTenant_id());
             for (Contract con : activeContracts) {
                 if(con.getContract_status().equals("pending")){
-                    notificationService.sendContractCreationionNotificationToOwner(owner_id,contract.getContract_id());
-                    notificationService.sendContractCreationionNotificationToTenant(contract.getTenant_id(),contract.getContract_id());
+                    notificationService.sendContractCreationionNotificationToOwner(owner_id,con.getContract_id());
+                    notificationService.sendContractCreationionNotificationToTenant(con.getTenant_id(),con.getContract_id());
                     return con.getContract_id();
                 }
             }
@@ -93,7 +97,9 @@ public class ContractService {
        boolean b= contractRepository.updateContractStatus("active",contract.getContract_id());
        if(b){
            notificationService.sendContractUpdateionNotification(contract.getTenant_id(),contract.getContract_id(),"Contract Accepted");
+
            if(owner_id!=-1){
+               propertyRepository.updateStatus("occupied",contract.getProperty_id(),owner_id);
                notificationService.sendContractUpdateionNotification(owner_id,contract.getContract_id(),"Contract Accepted");
            }
        }
@@ -117,6 +123,11 @@ public class ContractService {
                notificationService.sendContractUpdateionNotification(owner_id,contract.getContract_id(),"Contract Rejected");
            }
        }
+   }
+
+
+   public List<PropertyAssignment> getTenantAssignments(int tenant_id){
+        return contractRepository.getAssignmentsByTenantId(tenant_id);
    }
    public void terminateContract(int owner_id,Contract contract){
        List<Contract> conts =getContractsByOwner(owner_id);

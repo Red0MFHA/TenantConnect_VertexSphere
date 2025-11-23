@@ -289,7 +289,8 @@ public class ContractRepository {
     }
     public List<Contract> getPendingContractsByTenant(int tenantId) {
         List<Contract> contracts = new ArrayList<>();
-        String sql = "SELECT * FROM contracts WHERE tenant_id = " + tenantId+"AND contract_status = "+"pending";
+        String sql = "SELECT * FROM contracts WHERE tenant_id = " + tenantId
+                + " AND LOWER(contract_status) = 'pending'";
         ResultSet rs = dbHandler.executeSelect(sql);
 
         try {
@@ -356,7 +357,18 @@ public class ContractRepository {
 
     //  Update contract status (only if the contract exists)
     public boolean updateContractStatus(String newStatus, int contractId) {
-        String sql = "UPDATE contracts SET contract_status = '" + newStatus + "' WHERE contract_id = " + contractId;
+        String sql;
+
+        if ("active".equalsIgnoreCase(newStatus)) {
+            // Update both contract_status and start_date to today's date
+            sql = "UPDATE contracts SET contract_status = '" + newStatus +
+                    "', start_date = CURRENT_DATE WHERE contract_id = " + contractId;
+        } else {
+            // Only update contract_status
+            sql = "UPDATE contracts SET contract_status = '" + newStatus +
+                    "' WHERE contract_id = " + contractId;
+        }
+
         return dbHandler.executeQuery(sql);
     }
     public boolean updateContract(Contract contract) {

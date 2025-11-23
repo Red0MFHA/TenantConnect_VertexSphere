@@ -1,81 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import java.lang.String?>
-<?import javafx.scene.layout.ColumnConstraints?>
 
-<VBox spacing="24.0" styleClass="reports-view" xmlns:fx="http://javafx.com/fxml"
-  >
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.tenantconnect.UIcontrollers.ReportsController"
+      spacing="24.0" styleClass="reports-view">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
 
-    <!-- Header Section -->
+    <!-- Header -->
     <VBox spacing="8.0">
         <Label text="Reports" style="-fx-text-fill: #1E3A8A; -fx-font-size: 24px; -fx-font-weight: bold;"/>
         <Label text="Analytics and financial reports" style="-fx-text-fill: #6B7280;"/>
     </VBox>
 
-    <!-- Date Filter & Export Card -->
-    <VBox style="-fx-border-color: #E0F2FE; -fx-border-width: 2px; -fx-background-color: white; -fx-background-radius: 8; -fx-padding: 15;">
-        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-max-width: infinity; -fx-pref-height: 80;">
+    <!-- Date Filter -->
+    <HBox spacing="15" style="-fx-padding: 10;" alignment="CENTER_LEFT">
+        <VBox spacing="4">
+            <Label text="Start Date" style="-fx-font-size: 12px; -fx-text-fill: #6B7280;"/>
+            <DatePicker fx:id="startDatePicker"/>
+        </VBox>
+        <VBox spacing="4">
+            <Label text="End Date" style="-fx-font-size: 12px; -fx-text-fill: #6B7280;"/>
+            <DatePicker fx:id="endDatePicker"/>
+        </VBox>
+    </HBox>
 
-            <!-- Start Date Filter -->
-            <VBox spacing="4" HBox.hgrow="ALWAYS" style="-fx-min-width: 200;">
-                <Label text="Start Date" style="-fx-font-size: 12px; -fx-text-fill: #6B7280;"/>
-                <DatePicker fx:id="startDatePicker" promptText="Select start date" maxWidth="Infinity" styleClass="date-input"/>
-            </VBox>
-
-            <!-- End Date Filter -->
-            <VBox spacing="4" HBox.hgrow="ALWAYS" style="-fx-min-width: 200;">
-                <Label text="End Date" style="-fx-font-size: 12px; -fx-text-fill: #6B7280;"/>
-                <DatePicker fx:id="endDatePicker" promptText="Select end date" maxWidth="Infinity" styleClass="date-input"/>
-            </VBox>
-
-            <!-- Export Buttons -->
-
-        </HBox>
-    </VBox>
-
-    <!-- Charts Grid (2 columns) -->
+    <!-- Charts Grid -->
     <GridPane hgap="24.0" vgap="24.0">
         <columnConstraints>
-            <ColumnConstraints percentWidth="50.0"/>
-            <ColumnConstraints percentWidth="50.0"/>
+            <ColumnConstraints percentWidth="50"/>
+            <ColumnConstraints percentWidth="50"/>
         </columnConstraints>
 
-        <!-- Bar Chart Card (Column 0) -->
-        <VBox GridPane.columnIndex="0" style="-fx-border-color: #E0F2FE; -fx-border-width: 2px; -fx-background-color: white; -fx-background-radius: 8;">
+        <!-- Bar Chart: Rent Collected vs Expected -->
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="0"
+              style="-fx-border-color: #E0F2FE; -fx-border-width: 2px; -fx-background-color: white; -fx-background-radius: 8;">
             <Label text="Rent Collection vs Expected"
-                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1E3A8A; -fx-padding: 10; -fx-background-color: #E0F2FE; -fx-max-width: infinity;"/>
-
-            <VBox style="-fx-padding: 15;">
-                <BarChart fx:id="barChart" style="-fx-pref-height: 300;">
-                    <xAxis><CategoryAxis side="BOTTOM"/></xAxis>
-                    <yAxis><NumberAxis side="LEFT"/></yAxis>
-                </BarChart>
-            </VBox>
+                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1E3A8A; -fx-padding: 10; -fx-background-color: #E0F2FE;"/>
+            <BarChart fx:id="barChart" prefHeight="300">
+                <xAxis><CategoryAxis side="BOTTOM"/></xAxis>
+                <yAxis><NumberAxis side="LEFT"/></yAxis>
+            </BarChart>
         </VBox>
 
-        <!-- Pie Chart Card (Column 1) -->
-        <VBox GridPane.columnIndex="1" style="-fx-border-color: #E0F2FE; -fx-border-width: 2px; -fx-background-color: white; -fx-background-radius: 8;">
+        <!-- Pie Chart: Payment Status Distribution -->
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="0"
+              style="-fx-border-color: #E0F2FE; -fx-border-width: 2px; -fx-background-color: white; -fx-background-radius: 8;">
             <Label text="Payment Status Distribution"
-                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1E3A8A; -fx-padding: 10; -fx-background-color: #E0F2FE; -fx-max-width: infinity;"/>
-
-            <VBox style="-fx-padding: 15; -fx-alignment: CENTER;">
-                <PieChart fx:id="pieChart" style="-fx-pref-height: 300;"/>
-            </VBox>
+                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1E3A8A; -fx-padding: 10; -fx-background-color: #E0F2FE;"/>
+            <PieChart fx:id="pieChart" prefHeight="300"/>
         </VBox>
     </GridPane>
-
-    <stylesheets>
-        <String fx:value="@../Applicationstyle.css"/>
-    </stylesheets>
 </VBox>
