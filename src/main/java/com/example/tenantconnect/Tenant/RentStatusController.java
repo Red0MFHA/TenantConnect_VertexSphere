@@ -2,6 +2,7 @@ package com.example.tenantconnect.Tenant;
 
 import com.example.tenantconnect.Domain.Payment;
 import com.example.tenantconnect.Services.FacadeClass;
+import com.example.tenantconnect.controllers.TenantController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -9,7 +10,7 @@ import javafx.scene.control.TableView;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class RentStatusController {
+public class RentStatusController extends TenantController {
 
     private final FacadeClass facade = FacadeClass.getInstance();
 
@@ -27,7 +28,7 @@ public class RentStatusController {
     @FXML
     private void initialize() {
         setupColumns();
-        loadRentStatus();
+        checkRentStatus();
     }
 
     private void setupColumns() {
@@ -76,7 +77,7 @@ public class RentStatusController {
         );
     }
 
-    private void loadRentStatus() {
+    public void checkRentStatus() {
         var payments = facade.getPaymentService()
                 .getDuePaymentsForTenant(FacadeClass.CURRENT_USER_ID);  // Only current due ones
 

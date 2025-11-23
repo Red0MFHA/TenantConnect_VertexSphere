@@ -5,6 +5,7 @@ import com.example.tenantconnect.Domain.PaymentExtension;
 import com.example.tenantconnect.Domain.Property;
 import com.example.tenantconnect.Repositories.DB_Handler;
 import com.example.tenantconnect.Services.FacadeClass;
+import com.example.tenantconnect.controllers.TenantController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RequestExtensionController {
+public class RequestExtensionController extends TenantController {
 
     private final FacadeClass facade = FacadeClass.getInstance();
     private final DB_Handler db = DB_Handler.getInstance();
@@ -42,13 +43,21 @@ public class RequestExtensionController {
 
     private Payment selectedPayment;
 
+    // //////////////////////////////////////////
+    // Controller  "Navigate to Request Extension" //////
+    // //////////////////////////////////////////
     @FXML
     private void initialize() {
-        loadPropertiesWithPendingRent();
+        findDuePayment();
         propertyComboBox.setOnAction(e -> updateDueDateDisplay());
     }
 
-    private void loadPropertiesWithPendingRent() {
+    private void findDuePayment() {
+
+        // //////////////////////////////////////////
+        // Payment  "find Due Payment" //////
+        // //////////////////////////////////////////
+
         List<Payment> pendingPayments = facade.getPaymentService()
                 .getDuePaymentsForTenant(FacadeClass.CURRENT_USER_ID);
 
@@ -137,8 +146,11 @@ public class RequestExtensionController {
         submitButton.setDisable(false);
     }
 
+    // //////////////////////////////////////////
+    // Tenant Controller "submitExtensionRequest" //////
+    // //////////////////////////////////////////
     @FXML
-    private void onSubmitRequest() {
+    public void submitExtensionRequest() {
         if (selectedPayment == null) {
             new Alert(Alert.AlertType.WARNING, "Please select a property.", ButtonType.OK).showAndWait();
             return;
@@ -165,6 +177,9 @@ public class RequestExtensionController {
         ext.setReason(reason);
         ext.setStatus("pending");
 
+        // //////////////////////////////////////////
+        // Payment Service "Request Extension" //////
+        // //////////////////////////////////////////
         facade.getPaymentService().requestExtension(FacadeClass.CURRENT_USER_ID, ext);
 
         new Alert(Alert.AlertType.INFORMATION,
