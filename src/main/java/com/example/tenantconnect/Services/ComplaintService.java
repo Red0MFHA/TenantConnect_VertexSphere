@@ -4,7 +4,7 @@ import com.example.tenantconnect.Domain.Complaint;
 import com.example.tenantconnect.Repositories.ComplaintRepository;
 import com.example.tenantconnect.Services.NotificationService;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.Collectors;import com.example.tenantconnect.UIcontrollers.ComplaintsController;
 
 public class ComplaintService {
 
@@ -49,6 +49,16 @@ public class ComplaintService {
             notificationService.sendCOmplaintUpdationNotification(tenantID,complaintId,resolutionNotes);
         }
         return b;
+    }
+
+    public List<ComplaintsController.ComplaintTableItem> getOwnerComplaintTrackingData(int ownerId) {
+        // This requires the new repository method and the ComplaintTableItem class from the controller
+        return complaintRepo.getOwnerComplaintTrackingData(ownerId);
+    }
+
+    // NEW: Helper method to get the Tenant ID for a notification after status update
+    public int getTenantIdForNotification(int complaintId) {
+        return complaintRepo.getTenantIdByComplaintId(complaintId);
     }
 
     public boolean FileComplaint(int tenantID,Complaint complaint) {

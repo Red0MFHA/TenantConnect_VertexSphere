@@ -130,29 +130,76 @@ public class PaymentService
         }
     }
 
-    public Boolean approveExtentionRequest(int extension_ID,String Message){
-        PaymentExtension paymentExtension = paymentRepository.getPaymentExtensionByExtensionID(extension_ID);
-        if(paymentExtension!=null){
-            return false;
-        }
-        paymentExtension.setStatus("approved");
-        //now adding new due date
-        paymentExtension.setCurrent_due_date(paymentExtension.getRequested_due_date());
-        //now sending the notification to tenant
-        notificationService.sendPaymentNotification(paymentExtension.getTenant_id(),paymentExtension.getPayment_id(),"approved : "+Message);
-        return true;
-    }
-    public Boolean rejectExtentionRequest(int extension_ID,String Message){
-        PaymentExtension paymentExtension = paymentRepository.getPaymentExtensionByExtensionID(extension_ID);
-        if(paymentExtension!=null){
-            return false;
-        }
-        paymentExtension.setStatus("rejected");
-        //now sending the notification to tenant
-        notificationService.sendPaymentNotification(paymentExtension.getTenant_id(),paymentExtension.getPayment_id(),"rejected : "+Message);
-        return true;
+//    public Boolean approveExtentionRequest(int extension_ID,String Message){
+//        PaymentExtension paymentExtension = paymentRepository.getPaymentExtensionByExtensionID(extension_ID);
+//        if(paymentExtension!=null){
+//            return false;
+//        }
+//        paymentExtension.setStatus("approved");
+//        //now adding new due date
+//        paymentExtension.setCurrent_due_date(paymentExtension.getRequested_due_date());
+//        //now sending the notification to tenant
+//        notificationService.sendPaymentNotification(paymentExtension.getTenant_id(),paymentExtension.getPayment_id(),"approved : "+Message);
+//        return true;
+//    }
+//    public Boolean rejectExtentionRequest(int extension_ID,String Message){
+//        PaymentExtension paymentExtension = paymentRepository.getPaymentExtensionByExtensionID(extension_ID);
+//        if(paymentExtension!=null){
+//            return false;
+//        }
+//        paymentExtension.setStatus("rejected");
+//        //now sending the notification to tenant
+//        notificationService.sendPaymentNotification(paymentExtension.getTenant_id(),paymentExtension.getPayment_id(),"rejected : "+Message);
+//        return true;
+//    }
+public Boolean approveExtentionRequest(int extension_ID,String Message){
+    PaymentExtension paymentExtension = paymentRepository.getPaymentExtensionByExtensionID(extension_ID);
+
+    if(paymentExtension == null){
+        return false;
     }
 
+    // 1. Update the extension status to 'approved'
+    boolean extStatusUpdated = paymentRepository.updatePaymentExtensionStatus(extension_ID, "approved");
+
+    // 2. Update the due date in the main 'payments' table
+    boolean paymentDueUpdated = paymentRepository.updatePaymentDueDate(
+            paymentExtension.getPayment_id(),
+            paymentExtension.getRequested_due_date()
+    );
+
+    if(extStatusUpdated && paymentDueUpdated){
+        notificationService.sendPaymentNotification(
+                paymentExtension.getTenant_id(),
+                paymentExtension.getPayment_id(),
+                "Extension Approved: " + Message
+        );
+        return true;
+    }
+    return false;
+}
+
+    public Boolean rejectExtentionRequest(int extension_ID,String Message){
+        PaymentExtension paymentExtension = paymentRepository.getPaymentExtensionByExtensionID(extension_ID);
+
+        if(paymentExtension == null){
+            return false;
+        }
+
+        // 1. Update the extension status to 'rejected'
+        boolean extStatusUpdated = paymentRepository.updatePaymentExtensionStatus(extension_ID, "rejected");
+
+        if(extStatusUpdated){
+            notificationService.sendPaymentNotification(
+                    paymentExtension.getTenant_id(),
+                    paymentExtension.getPayment_id(),
+                    "Extension Rejected: " + Message
+            );
+            // Note: No change to the main 'payments' due date is needed for rejection.
+            return true;
+        }
+        return false;
+    }
     public void requestExtension(int tenantID,PaymentExtension ext){
         List<Payment> pays=getDuePaymentsForTenant(ext.getTenant_id());
         for(Payment payment:pays){

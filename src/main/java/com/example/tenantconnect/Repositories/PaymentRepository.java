@@ -16,6 +16,7 @@ public class PaymentRepository {
     public PaymentRepository() {
         this.dbHandler = DB_Handler.getInstance();
         createPaymentsTable();
+        createExtensionsTable();
     }
 
     // Create payments table
@@ -215,21 +216,48 @@ WHERE pr.owner_id =
         dbHandler.executeQuery(sql);
     }
 
-    // Update extension status (approve/reject)
-    public void updatePaymentExtensionStatus(int extensionId, String status) {
-        String sql = "UPDATE payment_extensions SET status = '" + status + "', responded_at = CURRENT_TIMESTAMP " +
+//    // Update extension status (approve/reject)
+//    public void updatePaymentExtensionStatus(int extensionId, String status) {
+//        String sql = "UPDATE payment_extensions SET status = '" + status + "', responded_at = CURRENT_TIMESTAMP " +
+//                "WHERE extension_id = " + extensionId + ";";
+//        dbHandler.executeQuery(sql);
+//    }
+public boolean updatePaymentExtension(PaymentExtension ext) {
+    // 1. Update the Extension Status
+    String sql = "UPDATE payment_extensions SET status = '"+ ext.getStatus() +
+            "', responded_at = CURRENT_TIMESTAMP " +
+            "WHERE extension_id = "+ ext.getExtension_id() + ";";
+
+    // We execute the status update and check if it succeeds
+    boolean statusUpdated = dbHandler.executeQuery(sql);
+
+    // If status is APPROVED, we need to update the payment's due date
+    if (statusUpdated && ext.getStatus().equalsIgnoreCase("approved")) {
+        // 2. Update the associated Payment's due_date
+        // Using the requested_due_date from the extension object
+        String sql1 = "UPDATE payments SET due_date = '"+ ext.getRequested_due_date() +
+                "' WHERE payment_id = "+ ext.getPayment_id() + ";" ;
+        return dbHandler.executeQuery(sql1); // Return true only if both succeed
+    }
+
+    return statusUpdated; // Return true if status was updated (for both approved/rejected)
+}
+
+    public boolean updatePaymentDueDate(int paymentId, String newDueDate) {
+        String sql = "UPDATE payments SET due_date = '" + newDueDate +
+                "' WHERE payment_id = " + paymentId + ";";
+        return dbHandler.executeQuery(sql);
+    }
+
+    // **2. REVISED: Update the extension record's status.**
+    // We separate this from the due date update for clean service logic.
+    public boolean updatePaymentExtensionStatus(int extensionId, String status) {
+        String sql = "UPDATE payment_extensions SET status = '" + status +
+                "', responded_at = CURRENT_TIMESTAMP " +
                 "WHERE extension_id = " + extensionId + ";";
-        dbHandler.executeQuery(sql);
+        return dbHandler.executeQuery(sql);
     }
-    //update when the extension request is updates
-    public void updateExtensionRequest(PaymentExtension pr){
-        //updating Status
-        String sql = "UPDATE payment_extensions SET status = '"+ pr.getStatus() +"' WHERE extension_id = "+ pr.getExtension_id() + ";";
-        dbHandler.executeQuery(sql);
-        //updating duedate
-        String sql1 = "UPDATE payments SET due_date = '"+pr.getCurrent_due_date()  +"' where payment_id = "+ pr.getPayment_id() + ";" ;
-        dbHandler.executeQuery(sql1);
-    }
+
     // Delete extension
     public void deletePaymentExtension(int extensionId) {
         String sql = "DELETE FROM payment_extensions WHERE extension_id = " + extensionId + ";";

@@ -5,7 +5,7 @@ import com.example.tenantconnect.Domain.Complaint;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List;import com.example.tenantconnect.UIcontrollers.ComplaintsController;
 
 public class ComplaintRepository {
 
@@ -53,7 +53,57 @@ public class ComplaintRepository {
                 "WHERE complaint_id = " + c.getComplaint_id() + ";";
         dbHandler.executeQuery(sql);
     }
+    public List<ComplaintsController.ComplaintTableItem> getOwnerComplaintTrackingData(int ownerId) {
+        List<ComplaintsController.ComplaintTableItem> complaintData = new ArrayList<>();
+        System.out.println("ownerId: " + ownerId);
+        // We join tenants (users) and properties to the complaints table.
+        String sql = """
+    SELECT 
+        comp.complaint_id,
+        u.full_name AS tenant_name, 
+        pr.property_name,
+        comp.category,
+        comp.title,
+        comp.created_at AS date,
+        comp.status
+    FROM complaints comp
+    JOIN properties pr ON comp.property_id = pr.property_id
+    JOIN users u ON comp.tenant_id = u.user_id
+    WHERE pr.owner_id = %d
+    ORDER BY comp.created_at DESC;
+    """.formatted(ownerId); // Assuming you are now using .formatted() successfully
 
+        try (ResultSet rs = dbHandler.executeSelect(sql)) {
+            while (rs != null && rs.next()) {
+                // Note: date format conversion might be needed later, but using String for now.
+                ComplaintsController.ComplaintTableItem item = new ComplaintsController.ComplaintTableItem(
+                        rs.getInt("complaint_id"),
+                        rs.getString("tenant_name"),
+                        rs.getString("property_name"),
+                        rs.getString("category"),
+                        rs.getString("title"),
+                        rs.getString("date").substring(0, 10), // Truncate date for table view (e.g., 'YYYY-MM-DD')
+                        rs.getString("status")
+                );
+                complaintData.add(item);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return complaintData;
+    }
+    // You will also need a method to get the Tenant ID for a notification after updating status.
+    public int getTenantIdByComplaintId(int complaintId) {
+        String sql = "SELECT tenant_id FROM complaints WHERE complaint_id = " + complaintId;
+        try (ResultSet rs = dbHandler.executeSelect(sql)) {
+            if (rs != null && rs.next()) {
+                return rs.getInt("tenant_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
     public boolean updateStatus(int complaintId, String newStatus){
         String sql = "UPDATE complaints SET  status = '" + newStatus + "' WHERE complaint_id = " + complaintId + ";";
         return dbHandler.executeQuery(sql);
