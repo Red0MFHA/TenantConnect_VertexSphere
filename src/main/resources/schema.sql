@@ -85,10 +85,11 @@ CREATE TABLE payment_extensions (
                                     status VARCHAR(20) CHECK(status IN ('pending', 'approved', 'rejected')) DEFAULT 'pending',
                                     responded_at DATETIME,
                                     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                                    FOREIGN KEY (payment_id) REFERENCES rent_payments(payment_id) ON DELETE CASCADE,
+                                    FOREIGN KEY (payment_id) REFERENCES payments(payment_id) ON DELETE CASCADE,
                                     FOREIGN KEY (tenant_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
+DROP TABLE payment_extensions;
 -- Complaints table
 CREATE TABLE complaints (
                             complaint_id INTEGER PRIMARY KEY AUTOINCREMENT,
