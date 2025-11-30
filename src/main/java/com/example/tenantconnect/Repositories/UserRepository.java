@@ -200,5 +200,31 @@ public class UserRepository {
         }
         return false;
     }
+    public void populateUser(User user) {
+        if (user == null || user.id <= 0) {
+            System.out.println("Invalid user object or user_id.");
+            return;
+        }
+
+        String sql = "SELECT * FROM users WHERE user_id=" + user.id + " LIMIT 1";
+        ResultSet rs = dbHandler.executeSelect(sql);
+
+        try {
+            if (rs != null && rs.next()) {
+                user.email = rs.getString("email");
+                user.full_name = rs.getString("full_name");
+                user.user_type = rs.getString("user_type");
+                user.created_at = rs.getString("created_at");
+                user.is_active = rs.getBoolean("is_active");
+            } else {
+                System.out.println("⚠️ No user found with ID: " + user.id);
+            }
+
+            if (rs != null) rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

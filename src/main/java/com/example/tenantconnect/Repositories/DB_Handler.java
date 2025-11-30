@@ -6,7 +6,7 @@ public class DB_Handler {
 
     private static final String DB_URL = "jdbc:sqlite:data/app.db";
     private Connection connection;
-
+    private DB_Handler(){}
     //applying singleton
     private static DB_Handler instance;
     public static DB_Handler getInstance() {

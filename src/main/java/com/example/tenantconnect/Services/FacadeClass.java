@@ -7,6 +7,7 @@ import com.example.tenantconnect.Services.PropertyService;
 import com.example.tenantconnect.Services.PaymentService;
 import com.example.tenantconnect.Services.ContractService;
 import com.example.tenantconnect.Services.ComplaintService;
+import com.example.tenantconnect.Domain.User;
 
 public class FacadeClass {
     NotificationService notificationService;
@@ -18,7 +19,7 @@ public class FacadeClass {
     DashboardService dashboardService;
 
     public static int CURRENT_USER_ID;
-
+    public static User currentUser;
     public static FacadeClass instance;
     private FacadeClass(){
         notificationService = new NotificationService();

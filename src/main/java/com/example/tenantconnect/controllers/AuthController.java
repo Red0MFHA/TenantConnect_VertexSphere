@@ -11,6 +11,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import java.io.IOException;
+import com.example.tenantconnect.Domain.User;
+import com.example.tenantconnect.Domain.Tenant;
+import com.example.tenantconnect.Domain.Owner;
 
 import com.example.tenantconnect.Services.FacadeClass;
 import com.example.tenantconnect.Repositories.UserRepository;
@@ -109,9 +112,15 @@ public class AuthController {
             SessionManager.getInstance().login(userId);
            FacadeClass.CURRENT_USER_ID = userId;
             if(userRepo.isOwner(userId)){
+                FacadeClass.currentUser=new Owner();
+                FacadeClass.currentUser.id=userId;
+                userRepo.populateUser(FacadeClass.currentUser);
                 changeScene(event, "/com/example/tenantconnect/Applayout.fxml");
             }
             else{
+                FacadeClass.currentUser=new Tenant();
+                FacadeClass.currentUser.id=userId;
+                userRepo.populateUser(FacadeClass.currentUser);
                 changeScene(event, "/com/example/tenantconnect/Tenant/main.fxml");
             }
         } else {
